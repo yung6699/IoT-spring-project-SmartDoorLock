@@ -4,7 +4,7 @@
  - [하드웨어](https://github.com/yung6699/SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락
  - [배치 프로세스](https://github.com/yung6699/SmartDoorLock-LogAnalyzers) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다.
 
-# 시스템 소개
+## 시스템 소개
 
  - 블루투스로 도어락의 문을 열고 닫으며, 인터넷으로 도어락의 열쇠들을 관리한다.
  - 사용자에게는 앱과 웹 서비스가 제공된다.
@@ -13,19 +13,19 @@
  - *도어락*은 스마트폰의 블루투스로 제어된다.
  - *배치프로세스*는 앱,웹,도어락 서비스 이용에 발생되면서 생긴 로그를 분석하는 프로세스이다. 
 
-# 시연 영상
+## 시연 영상
 
 [![Youtube 영상](https://img.youtube.com/vi/J4H5Q9bNlK4/0.jpg)](https://www.youtube.com/embed/J4H5Q9bNlK4)
 
-# 시스템 구성
+## 시스템 구성
 
 ![architecture of system](https://github.com/yung6699/SmartDoorLock/raw/master/docs/images/architecture.png)
 
-# 시스템 기능도
+## 시스템 기능도
 
 ![functions of system](https://github.com/yung6699/SmartDoorLock/raw/master/docs/images/functions.png)
 
-# 시스템 산출문서
+## 시스템 산출문서
  
  - [운영중인 웹페이지](http://smartlock.fun25.co.kr) 
   - 테스트 계정( dydwls121200@gmail.com / 1 )
@@ -35,12 +35,12 @@
  - Trello [프로젝트 현황](https://trello.com/b/JC3rUHSw/-)
  - Trello [이슈 관리](https://trello.com/b/yQseIG1l/smartlock)
 
-# 참여자
+## 참여자
  - [윤태영](https://github.com/yung6699)
  - [조용진](https://github.com/drake-jin)
  - [진영균](https://github.com/ywnwalone)
  - 황대건
 
-# 한이음 공모전
+## 한이음 공모전
 - [2016 한이음 공모전](./hanium2016) : 공모전 참여 내역      
 
