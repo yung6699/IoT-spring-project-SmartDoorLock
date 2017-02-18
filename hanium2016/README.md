@@ -5,7 +5,7 @@
 
 ----
 ## 사진
-![엑스포](./image/img01.png)
+![엑스포](https://github.com/yung6699/SmartDoorLock/hanium2016/raw/master/docs/images/img01.png)
 
 ----
 ## 수행내용
