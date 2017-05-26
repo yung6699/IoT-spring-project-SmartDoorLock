@@ -1,8 +1,8 @@
 # IoT SmartDoorLock System Project
- - [웹, 서비스](https://github.com/yung6699/SmartDoorLock-WebApplication) : 관리자 페이지 이며 앱보다 더 넓은 관리기능 제공
- - [앱](https://github.com/yung6699/SmartDoorLock-HybridApplication) : 실제 도어락을 여는 주체이며 웹보다 적은 관리기능을 제공한다.
- - [하드웨어](https://github.com/yung6699/SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락
- - [배치 프로세스](https://github.com/yung6699/SmartDoorLock-LogAnalyzers) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다.
+ - [웹, 서비스](https://github.com/yung6699/SmartDoorLock-WebApplication) : 관리자 페이지 이며 앱보다 더 넓은 관리기능 제공 (Spring Framework, JSP)
+ - [앱](https://github.com/yung6699/SmartDoorLock-HybridApplication) : 실제 도어락을 여는 주체이며 웹보다 적은 관리기능을 제공한다. (Cordova)
+ - [하드웨어](https://github.com/yung6699/SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락 (Arduino, C)
+ - [배치 프로세스](https://github.com/yung6699/SmartDoorLock-LogAnalyzers) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다. (Java)
 
 ## 시스템 소개
 
