@@ -1,0 +1,16 @@
+body{margin:0px;}
+a{text-decoration:none;color:#333;}
+p.ui-li-aside{width:40px; margin-top:8px;}
+#mykeyList_content{
+	overflow-y: hidden;
+	padding-bottom:2em;
+	padding-top:0.8em;
+}
+
+#mykeyList li{border-bottom:solid 1px #bebebe;}
+#mykeyList li:hover{background-color:#008CBA;border-bottom:solid 1px #008CBA;}
+.key_name{margin-top: -3px;}
+.serial_no{margin-top: -5px;}
+#master{content:url(../../img/mykey/master_black.svg); margin-top: 5px;}
+#manager{content:url(../../img/mykey/manager_black.svg); margin-top: 5px;}
+#user{content:url(../../img/mykey/user_black.svg); margin-top: 5px;}

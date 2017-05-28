@@ -1,0 +1,140 @@
+body{
+
+	background-color:#ffffff;
+	margin:0px;
+}
+
+
+
+/*  도어락 상세 정보 CSS */
+#mydoorLockDetail_content{
+	overflow-y: hidden;
+	margin-top:0em;
+	padding-bottom:2em;
+	padding-top:1em;
+}
+
+#delete {
+	padding-top: 5px;
+	margin-right: -10px;
+}
+
+/* 도어락 정보  */
+#doorLock_info{
+padding-left: 1em;
+padding-right: 1em;
+padding-top: 1em;
+padding-bottom: 1em;
+margin-left: 0.5em;
+margin-right: 0.5em;
+margin-top: 1em;
+background-color: #fff;
+}
+
+
+#doorLock_info li{
+	display:block;
+	padding-top:0.5em;
+	padding-bottom:1em;
+}
+
+
+#doorLock_info li:first-child{
+margin-bottom: 1em;
+font-size: 1.25em;
+font-weight: bold;
+color: black;
+margin-top: 0;
+margin-right: 0;	
+border-bottom: 1px solid #2A3F54;
+}
+
+#doorLock_info li:first-child > a{
+	font-size: 15px;
+}
+
+
+#doorLock_Name{
+	border-bottom:solid 1px #bebebe;
+}
+
+#doorLock_info li span:first-child {
+	display:inline-block; 
+	width:6em;
+	font-weight: bold;
+	color:#000000;
+	font-size:1em;
+}
+
+
+
+#doorLock_info  li span:nth-child(2){
+	display:inline-block; 
+	width:10em;
+	font-size:1em; 
+	text-align:right;
+	float:right;
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow:ellipsis;
+	color:#000000;
+}
+
+#key_register{
+	float:right; 
+	color:#ffffff;
+}
+
+
+
+/*  도어락 상세보기에서 등록된 열쇠 리스트  */
+#register_key_info_list{
+	margin-left:0.5em;
+	margin-right:0.5em;
+	margin-top:2em;
+	background-color: #fff;
+	border: #ddd;
+	color:#2A3F54;
+}
+
+
+#register_key_info_list li{
+display: block;
+padding-top: 1em;
+padding-bottom: 1em;
+}
+
+#register_key_info_list li:first-child{
+	background-color:#2A3F54;
+	color:#ffffff;
+	margin-top:0;
+	margin-left:0;
+	margin-right:0;
+	font-size: 15px;
+}
+
+
+#register_key_info_list .key{
+	padding-top: 1em;
+	padding-bottom: 2.5em;
+	border-bottom: 1px solid #ddd;
+}
+
+#register_key_info_list .key:hover{background-color:#bebebe;}
+#register_key_info_list .key:hover span{color:#ffffff;}
+#register_key_info_list .key:hover span:nth-child(2){color:#ffffff;}
+
+#register_key_info_list li span{
+	text-align:left;
+	float:left;
+	color:#000000;
+
+}
+
+#register_key_info_list li span:nth-child(2){
+	text-align:right;
+	float:right;
+	color:#000000;
+}
+
+

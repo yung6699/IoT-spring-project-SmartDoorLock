@@ -1,0 +1,7 @@
+# Packages
+
+platforms/
+plugins/
+hooks/
+
+www/js/common/common.js

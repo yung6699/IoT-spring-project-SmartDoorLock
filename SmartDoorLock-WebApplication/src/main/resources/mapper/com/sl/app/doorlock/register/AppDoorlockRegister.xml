@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.app.doorlock.register">
+	<select id="selectOneCheck" resultType="Integer" parameterType="AppDoorlockRegisterVO">
+		SELECT
+			count(*)
+		FROM
+			DOORLOCK_MST A
+		WHERE
+			1=1
+		AND 
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+		AND
+			A.REGISTERED='0'
+	</select>
+	
+	
+	
+	<!-- transaction queries -->
+	<!-- 도어락 마스터 테이블에서 제품키에 대한 등록여부에 '등록'을 등록해준다. -->
+	<update id="selectOneInsert_1" parameterType="AppDoorlockRegisterVO">
+		UPDATE
+			DOORLOCK_MST A
+		SET
+			A.REGISTERED = 1
+		WHERE
+			1=1
+		AND
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 도어락 마스터 테이블에서 등록된 제품과 제품키와 맞는 제품번호 그리고 제품 타입 등록 여부를 가져온다. -->
+	<select id="selectOneInsert_2" resultType="AppDoorlockRegisterVO" parameterType="AppDoorlockRegisterVO">
+		SELECT
+			A.SERIAL_NO as serial_no,
+			A.TYPE as type,
+			A.REGISTERED as registered
+		FROM
+			DOORLOCK_MST A
+		WHERE
+			1=1
+		AND
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+		AND
+			A.REGISTERED=1
+	</select>
+		
+	<!-- 		도어락 det 에다가 내용을 작성할때 정렬의 순서를 알기위해 select count(*)를 사용 	 -->
+	<select id="selectOneInsert_3" resultType="Integer" parameterType="AppDoorlockRegisterVO">
+		SELECT
+			MAX(A.SORT)+1 
+		FROM
+			DOORLOCK_DET A
+		WHERE
+			1=1
+		AND 
+			A.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+	</select>
+	
+	<!-- 도어락 det작성에 필요한 내용을 모았으면 바로 삽입  -->
+	<insert id="selectOneInsert_4" parameterType="AppDoorlockRegisterVO">
+		INSERT INTO
+			DOORLOCK_DET
+		VALUES(
+			#{serial_no,jdbcType=VARCHAR},
+			#{member_id,jdbcType=INTEGER},
+			#{doorlock_name,jdbcType=VARCHAR},
+			#{installed_place,jdbcType=VARCHAR},
+			#{sort,jdbcType=INTEGER},
+			'REGISTERED',
+			SYSDATE,
+			#{email,jdbcType=VARCHAR},
+			SYSDATE,
+			#{email,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 도어락 det를 작성했으니 작성한 사람은 마스터키를 받아야 한다. 이 때, 마스터 키에 대한 sort 내용을 다시 정의해줄 필요가 있다. -->
+	<select id="selectOneInsert_5" resultType="Integer" parameterType="AppDoorlockRegisterVO">
+	SELECT
+		MAX(A.SORT)+1
+	FROM
+		KEY_MST A
+	WHERE
+		1=1
+	AND 
+		A.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+	</select>
+	<!-- 도어락 det를 작성했으니 작성한 사람은 마스터키를 받아야 한다. 이 때, 마스터 키에 대한 sort 내용을 다시 정의해줄 필요가 있다. -->
+	<select id="selectOneInsert_6" resultType="Integer" parameterType="AppDoorlockRegisterVO">
+	SELECT
+		count(*)
+	FROM
+		KEY_MST A
+	WHERE
+		1=1
+	AND 
+		A.KEY_ID = #{key_id, jdbcType=INTEGER}
+	</select>
+	<!-- 마스터 키의 이름 기본값은 doorlock name 을 따르도록 한다. -->
+	<insert id="selectOneInsert_7" parameterType="AppDoorlockRegisterVO">
+		INSERT INTO
+			KEY_MST
+		VALUES(
+			#{key_id,jdbcType=VARCHAR},
+			#{member_id,jdbcType=INTEGER},
+			#{serial_no,jdbcType=VARCHAR},
+			#{doorlock_name,jdbcType=VARCHAR},
+			'MASTER',
+			SYSDATE,
+			TO_DATE('2999-01-01 00:00:00','YYYY-MM-DD HH24:MI:SS'),
+			#{sort,jdbcType=INTEGER},
+			'ACTIVE',
+			SYSDATE,
+			#{email,jdbcType=VARCHAR},
+			SYSDATE,
+			#{email,jdbcType=VARCHAR},
+			#{email,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 모든열쇠에는 기본적인 사용 가능 기간이 들어가야하고 처음부터 끝까지 사용할 수 있도록 default의 값을 삽입해 준다. -->
+	<insert id="selectOneInsert_8" parameterType="AppDoorlockRegisterVO">
+		INSERT INTO
+			KEY_VAL_TIME
+		VALUES(
+			#{key_id,jdbcType=VARCHAR},
+			KEY_VAL_TIME_SEQ.NEXTVAL,
+			#{member_id,jdbcType=INTEGER},
+			000000,
+			235959,
+			'일,월,화,수,목,금,토',
+			SYSDATE,
+			#{email,jdbcType=VARCHAR},
+			SYSDATE,
+			#{email,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<select id="selectOneInsert_9" resultType="AppDoorlockRegisterVO" parameterType="AppDoorlockRegisterVO">
+		SELECT
+			A.SERIAL_NO as serial_no,
+			A.MEMBER_ID as member_id,
+			A.DOORLOCK_NAME as doorlock_name,
+			A.INSTALLED_PLACE as installed_place,
+			A.SORT as sort,
+			A.STATE as state,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='DOORLOCK_STATE' AND B.USE_YN='예' AND B.CODE = A.STATE) as state_name,
+			A.CRT_DT as crt_dt,
+			A.CRT_EMAIL as crt_email,
+			A.UPDT_DT as updt_dt,
+			A.UPDT_EMAIL as updt_email
+		FROM
+			DOORLOCK_DET A
+		WHERE
+			1=1
+		AND
+			A.SERIAL_NO = #{serial_no, jdbcType=VARCHAR}
+		AND
+			A.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+	</select>
+	
+	
+		
+	<!-- 삽입한 키에 대한 내용을 가져온다. -->
+	<!-- 
+	<select id="selectOneInsert_8" resultType="AppDoorlockRegisterVO" parameterType="AppDoorlockRegisterVO">
+		SELECT
+			A.KEY_ID as key_id,
+			A.MEMBER_ID as member_id,
+			A.SERIAL_NO as serial_no,
+			A.KEY_NAME as key_name,
+			A.GRADE as grade,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_GRADE' AND B.USE_YN='예' AND B.CODE = A.GRADE) as grade_name,
+			A.START_DATE as start_date,
+			A.EXPIRE_DATE as expire_date,
+			A.SORT as sort,
+			A.STATE as state,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_STATE' AND B.USE_YN='예' AND B.CODE = A.STATE) as state_name,
+			A.CRT_DT as crt_dt,
+			A.CRT_EMAIL as crt_email,
+			A.UPDT_DT as updt_dt,
+			A.UPDT_EMAIL as updt_email
+		FROM
+			KEY_MST A
+		WHERE
+			1=1
+		AND
+			MEMBER_ID = #{member_id,jdbcType=INTEGER}
+		AND
+			SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+	</select>
+	-->
+</mapper>

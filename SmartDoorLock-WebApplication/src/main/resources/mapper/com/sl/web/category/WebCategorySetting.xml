@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mapper.com.sl.web.category">
+	<select id="checkCategory" parameterType="WebCategoryListVO" resultType="Integer">
+		SELECT
+			count(*) as count
+		FROM
+			CAT_LIST A
+		WHERE
+			A.CAT_ID = #{cat_id,jdbcType=INTEGER}
+				AND
+			A.CRT_EMAIL = #{crt_email,jdbcType=VARCHAR}
+				AND
+			1=1
+	</select>
+	
+	<select id="getCategoryListInfo1" parameterType="WebCategoryListVO" resultType="WebCategoryListVO">
+		SELECT
+			A.CAT_ID as cat_id,
+			A.CAT_NAME as cat_name,
+			A.TYPE as type,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='CATEGORY_TYPE' AND B.USE_YN='예' AND B.CODE = A.TYPE) as type_name,			
+			A.SORT as sort,
+			A.STATE as state,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='CATEGORY_STATE' AND B.USE_YN='예' AND B.CODE = A.STATE) as state_name,			
+			A.CRT_DT as crt_dt,
+			A.CRT_EMAIL as crt_email,
+			A.UPDT_DT as updt_dt,
+			A.UPDT_EMAIL as updt_email
+		FROM
+			CAT_LIST A
+		WHERE
+			A.CAT_ID = #{cat_id,jdbcType=INTEGER}
+				AND
+			A.CRT_EMAIL = #{crt_email,jdbcType=VARCHAR}
+				AND
+			1=1
+	</select>
+	
+	<select id="getCategoryListInfo2" parameterType="WebCategoryListVO" resultType="WebCategoryKeyVO">
+		SELECT
+			D.CAT_ID as cat_id,
+			D.KEY_ID as key_id
+		FROM
+			CAT_KEY D, KEY_MST A
+		WHERE
+			1=1
+				AND
+			D.KEY_ID = A.KEY_ID
+				AND
+			D.CRT_EMAIL = #{crt_email, jdbcType=VARCHAR}
+				AND
+			D.CAT_ID = #{cat_id,jdbcType=INTEGER}
+				AND
+			A.STATE = 'ACTIVE'
+		ORDER BY
+			D.SORT
+	</select>
+	
+	<select id="getCategoryListInfo3" parameterType="WebCategoryListVO" resultType="WebCategoryKeyVO">
+		SELECT
+			A.KEY_ID as key_id,
+			A.SERIAL_NO as serial_no,
+			A.KEY_NAME as  key_name,
+			A.GRADE as  grade,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_GRADE' AND B.USE_YN='예' AND B.CODE = A.GRADE) as grade_name,
+			to_char(A.START_DATE,'YY/MM/DD') as start_date, <!-- 열쇠 시작 기간  -->
+			to_char(A.EXPIRE_DATE,'YY/MM/DD') as expire_date, <!-- 열쇠 만료 기간  -->
+		 	A.SORT as sort,
+			A.STATE as state,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_STATE' AND B.USE_YN='예' AND B.CODE = A.STATE) as state_name,
+			to_char(A.CRT_DT,'YY/MM/DD') as crt_dt,<!--부여날짜  -->
+			A.CRT_EMAIL as crt_email,
+			to_char(A.UPDT_DT,'YY/MM/DD') as updt_dt,<!--부여날짜  -->
+			A.UPDT_EMAIL as updt_email,
+			A.EMAIL as email,
+			C.INSTALLED_PLACE as installed_place,
+			(SELECT B.NAME FROM MEMBER_MST B WHERE B.MEMBER_ID = C.MEMBER_ID) as owner_name
+		FROM
+			KEY_MST A, DOORLOCK_DET C
+		WHERE
+			1=1
+				AND
+			A.EMAIL = #{crt_email,jdbcType=VARCHAR}
+				AND
+			A.SERIAL_NO = C.SERIAL_NO
+				AND
+			A.STATE = 'ACTIVE'
+		ORDER BY
+			A.SORT
+	</select>
+	<delete id="submitCategoryModify1" parameterType="Map">
+		DELETE FROM
+			CAT_KEY A
+		WHERE
+			A.CAT_ID = #{cat_id,jdbcType=INTEGER}
+	</delete>
+	
+	<insert id="submitCategoryModify2" parameterType="WebCategoryVO">
+		INSERT INTO 
+			CAT_KEY 
+		VALUES
+	 	    (
+            	#{cat_id,jdbcType=INTEGER},
+            	#{member_id,jdbcType=INTEGER},
+            	#{key_id,jdbcType=VARCHAR}, 
+            	#{sort,jdbcType=INTEGER},
+            	SYSDATE,
+            	#{crt_email,jdbcType=VARCHAR},
+            	SYSDATE,
+            	#{updt_email,jdbcType=VARCHAR}
+            )
+    </insert>
+    <delete id="deleteCategoryModify1" parameterType="WebCategoryListVO">
+    	DELETE FROM
+    		CAT_KEY A
+    	WHERE
+    		A.CAT_ID = #{cat_id,jdbcType=INTEGER}
+    	AND
+    		A.CRT_EMAIL = #{crt_email,jdbcType=VARCHAR}
+    	AND
+    		1=1
+    </delete>
+    
+    <delete id="deleteCategoryModify2" parameterType="WebCategoryListVO">
+    	DELETE FROM
+    		CAT_LIST A
+    	WHERE
+    		A.CAT_ID = #{cat_id,jdbcType=INTEGER}
+    	AND
+    		A.CRT_EMAIL = #{crt_email,jdbcType=VARCHAR}
+    	AND
+    		1=1
+    </delete>
+    
+</mapper>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

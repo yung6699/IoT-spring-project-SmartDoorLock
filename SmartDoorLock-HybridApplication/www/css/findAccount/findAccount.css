@@ -1,0 +1,133 @@
+a { text-decoration:none }
+input:focus {
+  outline: none;
+}
+
+#header{
+  display:inline-block;
+  width:100%;
+  height:3em;
+  background-color:#2A3F54;
+  padding-top:0.1em;
+}
+#hd_left{
+  padding-top:0.75em;
+  padding-left:0.5em;
+  border:red;
+}
+
+#hd_left a{
+  font-family: 'Acme', sans-serif;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 15px 10px 15px;
+  text-decoration: none;
+}
+#hd_center{
+   font-family: 'Acme', sans-serif;
+}
+#hd_right{
+  padding-top:0.75em;
+  padding-right:0.5em;
+  border:green;
+  text-align:right;
+}
+#hd_right a{
+  font-family: 'Acme', sans-serif;
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px 15px 10px 15px;
+  text-decoration: none;
+}
+
+#content input{
+  border:1px solid #ddd;
+  padding-top:0.5em;
+  padding-bottom:0.5em;
+  padding-left:0.5em;
+  font-size:1em;
+  height: 30px;
+  margin-top: -10px;
+  width: 300px;
+}
+
+#content p{
+  padding-left:0.5em;
+  font-size: 20px;
+}
+
+
+.footer_btn_disactive:hover{
+  cursor:default;
+
+}
+.footer_btn_disactive {
+  position: absolute;
+  height:2.2em;
+  padding-top:0.8em;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  text-align: center;
+  color:#fff !important;
+  background-color:gray !important;
+  font-family:none !important;
+}
+
+.footer_btn_active {
+  position: absolute;
+  height:2.2em;
+  width: 100%;
+  padding-top:0.8em;
+  vertical-align: middle;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  text-align: center;
+  background-color: #2A3F54 !important;
+  color:#fff !important;
+  font-family:none !important;
+}
+.footer_btn_active:hover{
+  cursor:pointer;
+  background-color: #295AA6 !important;
+  color:#ffffff !important;
+}
+.ui-btn-up-a{
+  background-color:#1f4279;
+}
+.ui-btn-hover-a{
+  background-color:#1f4279;
+}
+.btn_disactive:hover {
+  cursor:default;
+}
+.btn_disactive{
+  color:#808080 !important;
+  background-color:#e2e2e2 !important;
+}
+.btn_active{
+  background-color: #1f4279 !important;
+  color:#ffffff !important;
+}
+.btn_active:hover{
+  cursor:pointer;
+  background-color: #295AA6 !important;
+  color:#ffffff !important;
+}
+
+
+.list_attr{
+  text-align:left;
+  float:left;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.list_value{
+  text-align:right;
+  float:right;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}

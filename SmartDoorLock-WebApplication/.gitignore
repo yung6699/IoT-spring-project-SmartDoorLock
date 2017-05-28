@@ -1,0 +1,10 @@
+target/
+work/
+.settings/
+.project
+.#webclasspath
+.classpath
+.springBeans
+.tomcatplugin
+SmartLock.xml 
+bin/

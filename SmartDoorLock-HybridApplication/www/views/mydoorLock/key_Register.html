@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>도어락에 키 등록하기</title>
+	<meta name="viewport" content="width=device-width initial-scale=1.0 maximum-scale=1.0" charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="../../css/common/common.css">
+	<link rel="stylesheet" type="text/css" href="../../css/mydoorLock/key_Register.css">	
+	<link rel="stylesheet" type="text/css" href="../../css/common/menu.css">
+	<link rel="stylesheet" type="text/css" href="../../css/common/header.css">
+
+
+	<script src="../../jquery/jquery-1.9.0.js"></script>
+	<script src="../../js/common/common.js"></script>
+	<script src="../../js/mydoorLock/key_Register.js"></script>
+	<script src="../../js/common/menu.js"></script>
+</head> 	
+<body>
+	<aside data-sidebar>
+		<div id="logo">
+			<img src="../../img/menu/menuLogo.svg"   onclick="window.location.replace('../../views/main/main.html')">
+		</div>
+		<hr>
+		<div id="side-menu">
+			<div style="" id="notice_page">
+				<img alt="notice"  id="notice">
+				<div class="menuText">메세지</div>
+			</div>
+
+			<div id="mydoorLock_page">
+				<img alt="mydoorLock" id="mydoorLock" >
+				<div class="menuText">도어락 관리</div>
+			</div>
+			
+			<div style="" id="mykey_page">
+				<img  alt="mykey" id="mykey" >
+				<div class="menuText">내 키 관리</div>
+			</div>
+			<div style="" id="doorRegister_page">
+				<img id="register" alt="register" >
+				<div class="menuText">도어락 등록</div>
+			</div>
+			<div style="" id="logout">
+				<img  alt="register" id="log_out" >
+				<div class="menuText">로그아웃</div>
+			</div>
+		</div>
+	</aside>
+	
+
+	<div data-role="page" id="key_register_page">
+		<div id="header">
+		    <div id="hd_left">
+		      <a id="hd_menu">메뉴</a>
+		    </div>
+		    <div id="hd_center">
+		      	열쇠등록
+		    </div>
+		    <div id="hd_right">
+		    	<a href="javascript:history.back();">뒤로가기</a>
+		    </div>
+		</div>
+
+		<div class="key_register_content">
+			<div class="email_search">
+				<input type="text" name="email-search" class="email_input" placeholder="Email" required style=""/>
+				<div class="search_button">검색</div>
+			</div>
+
+		<div class="select_box">
+			<h3 class='select'>부여할 권한 선택</h3>
+			<select name="select-native-2" class="select-native-2">
+				<option value="선택">선택 하시오.</option>
+				<option value="사용자">사용자</option>
+				<option value="매니저">매니저</option>
+			</select>	
+		</div>
+
+		<div class="key_date_setting">
+			<h3>만료 기간 선택</h3>
+			<div  style="margin-top:-5px;"><span><input class="start_date" type="date"/></span>  ~  <span><input class="expire_date" type="date"  /></span></div>
+		</div>
+	
+		<div style="display:none" class="member_id"></div> 
+		<div class="key_setting_box">
+			<div class="info_title">등록할 회원 정보</div>
+			<table class="setting_info">
+				<tr>
+					<td>이메일</td>
+					<td><input type='text' class="email_address" disabled /></td>
+				</tr>
+
+				<tr>
+					<td>이름</td>
+					<td><input type='text' class="email_userName" disabled /></td>
+				</tr>
+
+				<tr>
+					<td>도어락</td>
+					<td><input type='text' class="serial_no" disabled /></td>
+				</tr>
+			</table>
+		</div>	
+	</div>
+	<div class="footer">
+		<h4 style="margin-top: -2px; color:#ddd" id="keyadd_submit_button">추가하기</h4>
+	</div>
+	<div class="overlay" data-sidebar-overlay></div>
+	</div>
+	<!--  키 부여 하는 페이지 끝 -->
+</body>
+</html>

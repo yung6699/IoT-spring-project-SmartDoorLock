@@ -1,0 +1,109 @@
+body{
+	background-color:#F0F0F0;
+	margin:0;
+	padding:0;
+}
+
+#key_register_page{background-color:#F0F0F0;}
+
+input:focus{outline: none;}
+a{ text-decoration:none; color:#008CBA;}
+.key_register_content{
+	padding-left:1em;
+	padding-right:1em;
+	padding-top: 4.0em;
+}
+
+.email_input{
+	box-sizing: border-box;
+	padding-left: 1em;
+	width: 200px;
+	height: 40px;
+	margin-left: 15px;
+}
+
+.search_button{
+display: inline-block;
+text-align: center;
+vertical-align: middle;
+background-color: #2A3F54;
+width: 100px;
+height: 39px;
+margin-left: -5px;
+line-height: 38px;
+color: #ddd;
+}
+
+.select_box{text-align: center; background-color: #F0F0F0;}
+.select-native-2{
+	border: 0px;
+	height: 45px;
+	width: 300px;
+	font-size: 20px;
+	padding-left:0.25em;
+	margin-top:-5px;"
+	font-family: inherit;  /* 폰트 상속 */
+	background: url(https://farm1.staticflickr.com/379/19928272501_4ef877c265_t.jpg) no-repeat 95% 50%; /* 네이티브 화살표 대체 */  
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none;
+	background-color: #fff;
+}
+
+.key_date_setting{text-align: center;} 
+.key_date_setting div{ display: inline-block;}
+
+.key_setting_box{
+	text-align: center;
+	margin-top: 18px;
+}
+
+.key_setting_box input{
+	width: 200px;
+	height: 30px;
+	padding-left:1em;
+	padding-top:0.5em;
+}
+
+.setting_info{ 
+	font-size: 15px;
+	width: 328.5px;
+	display: inline-block;
+	background-color: #fff;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+
+.setting_info tr{height: 50px;}
+.setting_info tr td:first-child{padding-right: 10px; font-size: 16px; width: 70px; font-weight: bold;}
+
+.info_title{
+	height: 40px; 
+	line-height: 40px; 
+	font-size:20px; 
+	background-color:#2A3F54;  
+	font-weight: bold;
+	color: #ddd;
+}
+select{outline: none;}
+
+.start_date, .expire_date{
+	border: 0px;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+	font-size:1.25em;
+	width: 135px;
+}
+
+.footer{
+	left:0px;
+	bottom:0px;
+	height:2.0em;
+	width:100%;
+	text-align:center;
+	color:#ddd;
+	background-color:#2A3F54;
+	padding-top:1em;z-index:990;
+	position: fixed;
+}
+

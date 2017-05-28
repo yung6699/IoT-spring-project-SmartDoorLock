@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mapper.com.sl.app.notice.notice">
+	<select id="selectNoticeList" resultType="AppNoticeVO" parameterType = "AppNoticeVO">
+		SELECT
+            (SELECT A.NAME FROM MEMBER_MST A WHERE N.RECV_EMAIL = A.EMAIL) as recv_name,
+            (SELECT B.NAME FROM MEMBER_MST B WHERE N.SEND_EMAIL = B.EMAIL) as send_name,
+            N.SEND_EMAIL AS send_email,
+            N.RECV_EMAIL AS recv_email,
+            N.STATE AS state,
+            N.MESSAGE as message,
+            N.LOG_DATE AS log_date,
+            N.SERIAL_NO AS serial_no,
+            N.READ_FLAG AS read_flag,
+            N.IDX AS idx
+        FROM
+            NEWSPEED N
+        WHERE
+            1=1
+        AND 
+            N.RECV_EMAIL = #{email,jdbcType=VARCHAR}
+        ORDER BY 
+        	N.LOG_DATE
+        DESC
+	</select>
+	<select id="selectNotice" resultType="AppNoticeVO" parameterType = "AppNoticeVO">
+		SELECT
+            (SELECT A.NAME FROM MEMBER_MST A WHERE N.RECV_EMAIL = A.EMAIL) as recv_name,
+            (SELECT B.NAME FROM MEMBER_MST B WHERE N.SEND_EMAIL = B.EMAIL) as send_name,
+            N.SEND_EMAIL AS send_email,
+            N.RECV_EMAIL AS recv_email,
+            N.STATE AS state,
+            N.MESSAGE as message,
+            N.LOG_DATE AS log_date,
+            N.SERIAL_NO AS serial_no,
+            N.READ_FLAG AS read_flag,
+            N.IDX AS idx
+        FROM
+            NEWSPEED N
+        WHERE
+            1=1
+        AND 
+            N.IDX = #{idx,jdbcType=VARCHAR}
+	</select>
+	<select id="selectKey" parameterType="AppNoticeVO" resultType="AppMyDoorLockVO">
+	SELECT
+		A.KEY_ID as key_id,
+		A.MEMBER_ID as member_id,
+		A.SERIAL_NO as serial_no,
+		A.GRADE as grade,
+		A.STATE as state,
+		A.EMAIL as email,
+		A.crt_email as crt_email
+	FROM
+		KEY_MST A
+	WHERE 
+			A.EMAIL = #{recv_email, jdbcType=VARCHAR}
+		AND
+			A.SERIAL_NO = #{serial_no, jdbcType=VARCHAR}
+		AND
+			A.CRT_EMAIL = #{send_email, jdbcType=VARCHAR}
+		AND
+			A.STATE = 'GRANTING'
+	</select>
+	
+	<delete id="deleteNotice" parameterType="String">
+		DELETE FROM
+			NEWSPEED N
+		WHERE
+			N.IDX = #{idx,jdbcType=VARCHAR}
+	</delete>
+
+	
+	<update id="updateStateKey" parameterType="AppMyDoorLockVO">
+		UPDATE
+			KEY_MST A
+		SET
+			A.STATE='ACTIVE'
+		WHERE
+			A.KEY_ID=#{key_id,jdbcType=VARCHAR}
+	</update>
+
+	<delete id="refuseKey_1" parameterType="AppMyDoorLockVO">
+		DELETE FROM
+			KEY_VAL_TIME A
+		WHERE
+			A.KEY_ID=#{key_id,jdbcType=VARCHAR}
+	</delete>
+
+	<delete id="refuseKey_2" parameterType="AppMyDoorLockVO">
+		DELETE FROM
+			KEY_MST A
+		WHERE
+			A.KEY_ID=#{key_id,jdbcType=VARCHAR}
+	</delete>
+
+</mapper>

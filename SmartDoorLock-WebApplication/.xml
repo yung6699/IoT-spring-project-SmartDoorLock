@@ -1,0 +1,4 @@
+<Context path="" reloadable="true" docBase="C:\Workspace\SpringWorkspace\SmartLockWorkspace\SmartDoorLockWeb" workDir="C:\Workspace\SpringWorkspace\SmartLockWorkspace\SmartDoorLockWeb\work" >
+	<Logger className="org.apache.catalina.logger.SystemOutLogger" verbosity="4" timestamp="true"/>
+	<Loader className="org.apache.catalina.loader.DevLoader" reloadable="true" debug="1" useSystemClassLoaderAsParent="false" />
+</Context>

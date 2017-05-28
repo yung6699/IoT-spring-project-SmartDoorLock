@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.hw.key.check">
+
+	<select id="selectKey" resultType="HwKeyCheckVO" parameterType="HwKeyCheckVO">	
+		SELECT 
+			A.email as email,
+			A.key_id as key_id,
+			A.serial_no as serial_no
+		FROM 
+			KEY_MST A
+		where 
+			SERIAL_NO = #{serial_no, jdbcType=VARCHAR}
+		and
+			KEY_ID = #{key_id, jdbcType=VARCHAR}
+			 
+	</select>
+	<select id="selectKey2" resultType="HwKeyCheckVO" parameterType="HwKeyCheckVO">	
+	SELECT 
+		A.email as email,
+		A.key_id as key_id,
+		A.serial_no as serial_no
+	FROM 
+		KEY_MST A
+	where 
+		KEY_ID = #{key_id, jdbcType=VARCHAR}
+		 
+	</select>
+	
+	<select id="selectOneCheck" resultType="Integer" parameterType="HwKeyCheckVO">
+		
+		SELECT 
+			count(*)
+		FROM 
+			KEY_MST 
+		where 
+			SERIAL_NO = #{serial_no, jdbcType=VARCHAR}
+		and
+			KEY_ID = #{key_id, jdbcType=VARCHAR}
+			 
+	</select>
+</mapper>

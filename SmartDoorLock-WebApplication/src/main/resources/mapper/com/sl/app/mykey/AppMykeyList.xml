@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.app.mykey">
+	<select id="selectMykeyList" resultType="AppMykeyListVO"
+		parameterType="AppMykeyListVO">
+
+		SELECT 
+			A.KEY_NAME as key_name, <!-- 리스트에 표시될 열쇠 이름, 이건 자기가 정의한 이름이다. -->
+			A.KEY_ID as key_id, 
+			A.GRADE as grade, <!-- 열쇠 등급  -->
+			(SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+			A.SERIAL_NO as serial_no, <!-- 도어락 시리얼 넘버 --> 
+			(SELECT C.BLUETOOTH_ID FROM DOORLOCK_MST C WHERE C.SERIAL_NO = A.SERIAL_NO) as bluetooth_id,
+	<!-- 		to_char(A.CRT_DT,'YY/MM/DD')as crt_dt, 열쇠 부여 날짜. -->
+			A.CRT_DT as crt_dt,
+			A.CRT_EMAIL as crt_email, <!-- 키를 부여한 사람의 이메일  -->	
+			to_char(A.START_DATE,'YY/MM/DD') as start_date, <!-- 열쇠 시작 기간  -->
+			to_char(A.EXPIRE_DATE,'YY/MM/DD') as expire_date <!-- 열쇠 만료 기간  -->
+		FROM
+			KEY_MST A, DOORLOCK_DET B   
+		WHERE 
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER} 
+		AND
+			B.SERIAL_NO = A.SERIAL_NO
+		AND 
+			A.STATE = 'ACTIVE' 
+		AND 
+			A.START_DATE <![CDATA[ < ]]> SYSDATE 
+        AND 
+        	A.EXPIRE_DATE <![CDATA[ > ]]> SYSDATE	
+			
+	</select>
+	
+	<update id="updateMyKeyName" parameterType="AppMykeyListVO">
+		UPDATE 
+			KEY_MST A
+		SET 
+			A.KEY_NAME = #{key_name,jdbcType=VARCHAR} 
+		WHERE 
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR} 
+		AND 
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER} 
+		AND 
+			A.STATE = 'ACTIVE' 
+		AND 
+			A.START_DATE <![CDATA[ < ]]> SYSDATE 
+        AND 
+        	A.EXPIRE_DATE <![CDATA[ > ]]> SYSDATE	
+	</update>
+	
+		
+	<delete id="deleteKey_1" parameterType="AppMykeyListVO">
+		DELETE 
+			FROM KEY_MST A
+		WHERE 
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+		
+	</delete>
+	<delete id="deleteKey_2" parameterType="AppMykeyListVO">
+		DELETE 
+			FROM KEY_VAL_TIME A
+		WHERE 
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+		
+	</delete>
+	<delete id="deleteKey_3" parameterType="AppMykeyListVO">
+		DELETE 
+			FROM CAT_KEY A
+		WHERE 
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}		
+	</delete>
+	<delete id="deleteKey_4" parameterType="AppMykeyListVO">
+		DELETE FROM 
+			NEWSPEED A
+		WHERE 
+			A.RECV_EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+		AND
+			A.STATE='APP_DOORLOCK_KEY_CREATE_REQUEST' OR A.STATE='WEB_DOORLOCK_KEY_CREATE_REQUEST'			
+	</delete>
+	
+	
+	<select id="getRegId" parameterType="AppMykeyListVO" resultType="String">
+		SELECT
+			REG_ID
+		FROM
+			GCM_NOTI
+		WHERE
+			EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			AUTO_FLAG = 1
+	</select>
+	
+	
+	
+
+</mapper>

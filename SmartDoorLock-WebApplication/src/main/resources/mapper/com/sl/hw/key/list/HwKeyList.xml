@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.hw.key.list">
+
+	<select id="selectKeyList" resultType="HwKeyListVO" parameterType="String">	
+		SELECT 
+			A.key_id as key_id
+		FROM 
+			KEY_MST A
+		where 
+			SERIAL_NO = #{serial_no, jdbcType=VARCHAR}
+	</select>
+</mapper>

@@ -1,0 +1,29 @@
+body{background-color:#ffffff;margin:0;}
+*:focus {outline: none}
+#notice_list_content{
+  overflow-y:hidden;
+  padding-bottom:2em;
+  padding-top:0.8em;
+  background-color: #F0F0F0;
+}
+
+#notice_list li button{
+ text-align: center;
+ width: 100px;
+ height: 40px;
+ margin-right: 20px;
+ margin-top: 15px;
+ border: 0px;
+ background-color: #2A3F54;
+ color: #fff;
+}
+
+#notice_list li button:hover{
+   background-color: #ddd;
+}
+
+#notice_list li{border-bottom:solid 1px #bebebe;}
+#notice_list li img{
+margin-top: 2em;
+margin-left: 0.6em;
+}

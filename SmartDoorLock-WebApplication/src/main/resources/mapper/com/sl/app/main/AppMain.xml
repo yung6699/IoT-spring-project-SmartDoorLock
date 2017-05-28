@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.app.main">
+	<select id="selectListKeys" resultType="AppMainVO" parameterType="AppMainVO">
+	SELECT
+		A.KEY_NAME as key_name, <!-- 표시할 열쇠 이름 -->
+		A.KEY_ID as key_id, <!-- 블루투스로 보낼 키값. -->
+		A.GRADE as grade,<!-- 등급 -->
+		to_char(A.START_DATE,'YY/MM/DD') as start_date,
+		to_char(A.EXPIRE_DATE,'YY/MM/DD') as expire_date,
+		(SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND
+		C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+		A.SERIAL_NO as serial_no,
+		(SELECT C.BLUETOOTH_ID FROM DOORLOCK_MST C WHERE A.SERIAL_NO = C.SERIAL_NO) as
+		bluetooth_id,
+		B.DOORLOCK_NAME as doorlock_name,
+		B.INSTALLED_PLACE as installed_place
+	FROM
+		KEY_MST A, DOORLOCK_DET B
+	WHERE
+		A.SERIAL_NO = B.SERIAL_NO
+	AND
+		A.MEMBER_ID = #{member_id,jdbcType=INTEGER}
+	AND
+		(A.STATE = 'ACTIVE' OR A.STATE = 'INACTIVE')
+	AND
+		A.START_DATE <![CDATA[ < ]]> SYSDATE
+	AND
+		A.EXPIRE_DATE <![CDATA[ > ]]> SYSDATE
+	</select>
+	
+	
+	<select id="countNotice" resultType="AppMainVO" parameterType="AppMainVO">
+		SELECT
+			COUNT(*) as notice_count
+		FROM
+			NEWSPEED L
+		WHERE
+			L.READ_FLAG = 0
+		AND
+			L.RECV_EMAIL = (SELECT EMAIL FROM MEMBER_MST WHERE MEMBER_ID = #{member_id,jdbcType=INTEGER})		
+	</select>
+	<update id="logout" parameterType = "AppMainVO">
+		MERGE INTO 
+			GCM_NOTI G
+		USING 
+			MEMBER_MST M
+		ON(
+			G.EMAIL = M.EMAIL
+				AND 
+			M.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+			)
+		WHEN 
+			MATCHED 
+		THEN
+			UPDATE SET
+			G.AUTO_FLAG = 0
+	</update>
+	<select id="getEmail" parameterType="int" resultType="String">
+		SELECT
+			A.EMAIL as member_email
+		FROM
+			MEMBER_MST A
+		WHERE
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER}
+	</select>
+	<!--         SELECT 
+            A.KEY_ID as key_id, 
+            A.MEMBER_ID as member_id,
+            A.SERIAL_NO as serial_no,
+            A.KEY_NAME as key_name,
+            A.GRADE as grade,
+            (SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+            A.START_DATE as start_date,
+            A.EXPIRE_DATE as expire_date,
+            A.SORT as sort,
+            A.STATE as state,
+            (SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_STATE' AND C.USE_YN='예' AND C.CODE = A.STATE) as state_name,
+            A.CRT_DT as crt_dt,
+            A.CRT_EMAIL as crt_email,
+            A.UPDT_DT as updt_dt,
+            A.UPDT_EMAIL as updt_email
+            D.DOORLOCK_NAME as doorlock_name,
+            D.INSTALLED_PLACE as doorlock_installed_place,
+            D.STATE as doorlock_state,
+            (SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='DOORLOCK_STATE' AND C.USE_YN='예' AND C.CODE = D.STATE) as doorlock_state_name
+        FROM 
+            KEY_MST A,DOORLOCK_DET D
+        WHERE
+            1=1
+        AND
+        	A.SERIAL_NO = D.SERIAL_NO
+        AND 
+            A.START_DATE <![CDATA[ < ]]> SYSDATE 
+        AND
+            A.EXPIRE_DATE <![CDATA[ > ]]> SYSDATE
+        AND
+            A.STATE='IDLE'
+        AND 
+            A.KEY_ID
+        IN 
+            (	
+            	SELECT 
+	                B.KEY_ID 
+	            FROM 
+	                KEY_VAL_TIME B 
+	            WHERE 
+	                B.MEMBER_ID = #{member_id,jdbcType=INTEGER} 
+	            AND
+	                B.DAYS like #{days,jdbcType=VARCHAR}
+	            AND 
+	                B.START_DATE <![CDATA[ < ]]> SYSDATE 
+	            AND
+	                B.END_DATE <![CDATA[ > ]]> SYSDATE
+	            AND
+	                B.START_TIME <![CDATA[ < ]]> #{nowTime,jdbcType=INTEGER}
+	            AND
+	                B.END_TIME <![CDATA[ > ]]> #{nowTime, jdbcType=INTEGER}
+            ) -->
+	
+	<!-- 
+	
+        SELECT 
+            A.KEY_ID as key_id,
+            A.MEMBER_ID as member_id,
+            A.SERIAL_NO as serial_no,
+            A.KEY_NAME as key_name,
+            A.GRADE as grade,
+            (SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+            A.START_DATE as start_date,
+            A.EXPIRE_DATE as expire_date,
+            A.SORT as sort,
+            A.STATE as state,
+            (SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_STATE' AND C.USE_YN='예' AND C.CODE = A.STATE) as state_name,
+            A.CRT_DT as crt_dt,
+            A.CRT_EMAIL as crt_email,
+            A.UPDT_DT as updt_dt,
+            A.UPDT_EMAIL as updt_email
+        FROM 
+            KEY_MST A
+        WHERE
+            1=1
+        AND 
+            A.START_DATE < SYSDATE 
+        AND
+            A.EXPIRE_DATE > SYSDATE
+        AND
+            A.STATE='IDLE'
+        AND 
+            A.KEY_ID
+        IN 
+            (SELECT 
+                B.KEY_ID 
+            FROM 
+                KEY_VAL_TIME B 
+            WHERE 
+                B.MEMBER_ID = #{member_id,jdbcType=INTEGER} 
+            AND
+                B.DAYS like #{days,jdbcType=VARCHAR}
+            AND 
+                B.START_DATE < SYSDATE 
+            AND
+                B.END_DATE > SYSDATE)
+            AND
+                B.START_DATE < #{nowTime,jdbcType=INTEGER}
+            AND
+                B.END_DATE > #{nowTime, jdbcType=INTEGER}
+	 -->
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+	http://www.springframework.org/schema/util 
+	http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.host}" />
+		<property name="port" value="${email.port}" />
+		<property name="username" value="${email.username}" />
+		<property name="password" value="${email.password}" />
+		<property name="protocol" value="${email.protocol}" />
+		<property name="defaultEncoding" value="${email.encoding}" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				<prop key="mail.smtp.timeout">8500</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 의존성 주입 -->
+	<!-- id 이름은 인터페이스의 이름이고 첫글자는 소문자로 시작해야한다. 그리고 클래스는 의존성을 사용할 클래스의 패키지경로를 포함한 클래스 명이다. -->
+	<bean id="mailOrderManager" class="com.sl.system.email.sender.MailOrderManagerImpl" />
+
+</beans>

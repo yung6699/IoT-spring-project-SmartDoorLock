@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css?family=Acme");
+[data-sidebar] {
+ display: none;
+ position: fixed;
+ width: 6em;
+ height: 100%;
+ z-index: 999;
+}
+
+[data-sidebar-overlay] {
+ display: none;
+ position: fixed;
+ top: 0;
+ left: 0;
+ opacity: 0;
+ width: 100%;
+ min-height: inherit;
+ height:100%;
+ z-index:998;
+}
+
+.count{
+  display:block;
+  left:1.75em;
+  top:6.25em;     
+  width:25px;
+  height:25px;
+  text-align:center;
+  color : #fff;
+  border-radius:50%;
+  position:absolute;
+  background:#1ABB9C;
+  padding:0;
+}
+
+/* #73879C */
+
+/* Additional styles */
+aside { 
+	background-color: #2A3F54; 
+	box-shadow: 0 6px 0 0 rgba(0,0,0,0.5); 
+}
+
+.overlay { background-color: #000000; }
+#side-menu{margin-top:1em;}
+#side-menu div{
+  padding-top: 1.1em;
+  padding-bottom: 0.5em;
+  margin-top: -20px;
+  text-align: center;
+  color:white;
+}
+
+.menuText{
+    color:white;
+    font-size: 0.8em;
+}
+
+#side-menu div img{
+width: 4.5em;
+height: 4.0em;
+vertical-align: text-top;
+}
+
+#logo{
+  padding-bottom:0;
+  height:4em;
+  margin-bottom:1em;
+  text-align:center;
+  padding-top:0.75em;
+}
+
+#logo img{width:4em;height:4em;}
+hr{padding:0;margin:0;}
+#notice{content:url(../../img/menu/notice.svg);}
+#mydoorLock{content:url(../../img/menu/lock_list_white.svg);}
+#mykey{content:url(../../img/menu/key_list_white.svg);}
+#register{content:url(../../img/menu/lock_add_white.svg);}
+#log_out{content:url(../../img/menu/logout_white.svg);}

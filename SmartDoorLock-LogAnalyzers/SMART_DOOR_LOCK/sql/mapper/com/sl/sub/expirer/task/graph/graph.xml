@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="mapper.com.sl.sub.expirer.task.graph">
+
+
+	<!-- 모든 회원들을 불러옵니다. -->
+	<select id="selectListMembers" resultType="JSONObject">
+		SELECT 
+			A.MEMBER_ID,
+			A.EMAIL
+		FROM 
+			MEMBER_MST A
+		WHERE
+			A.STATE!=0
+		ORDER BY
+			A.MEMBER_ID
+	</select>
+	<select id="selectListMembersKeys" resultType="JSONObject">
+		SELECT 
+			A.KEY_ID,
+			A.GRADE,
+			A.STATE,
+			A.MEMBER_ID,
+			A.EMAIL
+		FROM 
+			KEY_MST A
+		WHERE
+			(A.STATE='ACTIVE' OR A.STATE='INACTIVE')
+				AND
+			A.EMAIL=#{EMAIL,jdbcType=VARCHAR}
+	</select>
+	<select id="selectListMembersDoorlock" resultType="JSONObject">
+		SELECT 
+			A.SERIAL_NO,
+			A.TYPE,
+			B.MEMBER_ID,
+			B.INSTALLED_PLACE,
+			B.DOORLOCK_NAME,
+			B.STATE
+		FROM 
+			DOORLOCK_MST A,DOORLOCK_DET B
+		WHERE
+			B.MEMBER_ID = #{MEMBER_ID,jdbcType=INTEGER}
+				AND
+			B.SERIAL_NO = A.SERIAL_NO
+	</select>
+	<select id="selectListCat" resultType="JSONObject">
+		SELECT 
+			A.CAT_ID,
+			A.CAT_NAME,
+			A.CRT_EMAIL,
+			A.MEMBER_ID
+		FROM 
+			CAT_LIST A
+	</select>
+	<select id="selectListCatKey" resultType="JSONObject">
+		SELECT 
+			A.CAT_ID,
+			B.KEY_ID,
+			B.GRADE,
+			B.STATE,
+			B.MEMBER_ID,
+			B.EMAIL,
+			B.SERIAL_NO
+		FROM 
+			CAT_KEY A,KEY_MST B
+		WHERE
+			(B.STATE='ACTIVE' OR B.STATE='INACTIVE')
+				AND
+			A.CAT_ID = #{CAT_ID,jdbcType=VARCHAR}
+				AND
+			B.KEY_ID = A.KEY_ID
+	</select>
+	<select id="selectListDoorlock" resultType="JSONObject">
+		SELECT 
+			A.SERIAL_NO,
+			A.TYPE,
+			A.BLUETOOTH_ID
+		FROM 
+			DOORLOCK_MST A
+		WHERE
+			A.REGISTERED = 1
+	</select>
+	<select id="selectListDoorlockKey" resultType="JSONObject">
+		SELECT 
+			A.SERIAL_NO , 
+			B.KEY_ID,
+			B.MEMBER_ID,
+			B.EMAIL,
+			B.STATE,
+			B.GRADE
+		FROM 
+			DOORLOCK_DET A,KEY_MST B
+		WHERE
+			(B.STATE='ACTIVE' OR B.STATE='INACTIVE')
+				AND
+			A.SERIAL_NO = #{SERIAL_NO,jdbcType=VARCHAR}
+				AND
+			B.SERIAL_NO = A.SERIAL_NO
+	</select>
+	<select id="selectListKey" resultType="JSONObject">
+		SELECT 
+			A.KEY_ID,
+			A.GRADE,
+			A.STATE,
+			A.MEMBER_ID,
+			A.EMAIL,
+			A.SERIAL_NO
+		FROM 
+			KEY_MST A
+		WHERE
+			(A.STATE='ACTIVE' OR A.STATE='INACTIVE')
+	</select>
+	
+	<!-- SET -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

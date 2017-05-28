@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="mapper.com.sl.sub.expirer.task.expiredKey">
+	<select id="getExpiredKeySerial_no" parameterType="KeyVO" resultType="KeyVO">
+		<![CDATA[ 
+			SELECT 
+				A.SERIAL_NO as serial_no,
+				A.EMAIL as email,
+				A.START_DATE as start_date,
+				A.EXPIRE_DATE as expire_date
+			FROM 
+				KEY_MST A
+			WHERE
+				(
+					A.STATE='GRANTING' 
+				OR 
+					A.STATE='ACTIVE' 
+				OR 
+					A.STATE='INACTIVE'
+				)
+			AND 
+				A.START_DATE>SYSDATE 
+			AND 
+				A.EXPIRE_DATE<=SYSDATE
+		]]>
+	</select>
+	<update id="setExpired" parameterType="KeyVO">
+		<![CDATA[ 
+			UPDATE 
+				KEY_MST A 
+			SET 
+				A.STATE='EXPIRED' 
+			WHERE 
+				A.START_DATE>SYSDATE 
+			AND 
+				A.EXPIRE_DATE<=SYSDATE
+			AND
+				(
+					A.STATE='GRANTING' 
+				OR 
+					A.STATE='ACTIVE' 
+				OR 
+					A.STATE='INACTIVE'
+				)
+		]]>
+	</update>
+	<select id="getDoorlockUser" parameterType="KeyVO" resultType="String">
+		<![CDATA[ 
+			SELECT
+				A.EMAIL as email
+			FROM
+				KEY_MST A 
+			WHERE 
+				A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+			AND 
+				(
+					A.STATE='ACTIVE' 
+				OR 
+					A.STATE='INACTIVE'
+				)
+		]]>
+	
+	</select>
+</mapper>

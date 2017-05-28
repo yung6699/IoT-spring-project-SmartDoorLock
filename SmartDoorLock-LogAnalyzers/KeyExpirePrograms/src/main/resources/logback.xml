@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="1 seconds">
+	<!-- 외부 설정파일을 사용할 수 있다. -->
+	<!-- 운영용 -->
+<!-- 	<property name="SMART_DOOR_LOCK" value="/usr/local/develop/tomcat7/subapps/SMART_DOOR_LOCK"/> -->
+	<!-- 개발용 -->
+	<property name="SMART_DOOR_LOCK" value="C:/Users/dydwl/Desktop/logs"/>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger{1000} @@ %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${SMART_DOOR_LOCK}/logs/smartlock-subapp.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger{1000} @@ %msg%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 파일이 하루에 한개씩 생성된다 -->
+			<fileNamePattern>${SMART_DOOR_LOCK}/smartlock-subapp/smartlock-webapp.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<!-- maxHIstory 설정은 위 부분에 롤링 정책에 따라 적용되 된다고 보면된다. 위 설정데로 라면 30일이 지난 파일은 
+				삭제가 된다. -->
+			<maxHistory>180</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+
+
+	<!-- http://syaku.tistory.com/316 중요한 블로거 http://totoro3040.blogspot.kr/2015/05/logbackxml.html -->
+
+
+	<logger name="com.sl" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="mapper.com.sl" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="mapper" level="DEBUG" />
+	<logger 
+		name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor"
+		level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework" level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="org.apache.commons.beanutils" level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.commons" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.catalina" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.ibatis" level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.apache.ibatis.session.Configuration" level="DEBUG">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<logger name="org.mybatis.spring" level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="java.sql.Connection" level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="java.sql.PreparedStatement" level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="java.sql" level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="java.sql.ResultSet" level="TRACE">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<!-- <logger name="jdbc.sqlonly" level="debug" /> -->
+	<!-- <logger name="jdbc.sqltiming" level="debug" /> -->
+	<!-- <logger name="jdbc.audit" level="error" /> -->
+	<logger name="jdbc.resultset" level="error">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+	<!-- <if condition='property("RUN_MODE").equals("SERVICE")'> -->
+	<!-- </if> -->
+
+</configuration>

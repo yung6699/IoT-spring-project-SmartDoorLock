@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.system.auth.join">
+	<update id="updateMemberState" parameterType="SystemAuthJoinVO">
+		UPDATE 
+			MEMBER_MST A
+		SET
+			A.STATE = '1'
+		WHERE
+			A.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+		AND
+			A.PASSWORD = #{password, jdbcType=VARCHAR}
+		AND
+			A.EMAIL = #{email, jdbcType=VARCHAR}
+		AND
+			A.STATE = '0'
+	</update>
+	<delete id="deleteMemberNoneAuth" parameterType="SystemAuthJoinVO">
+		DELETE FROM 
+			MEMBER_MST A
+		WHERE
+			A.STATE = '0'
+		AND
+			A.EMAIL = #{email, jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteMember" parameterType="SystemAuthJoinVO">
+		DELETE FROM 
+			MEMBER_MST A
+		WHERE
+			A.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+		AND
+			A.PASSWORD = #{password, jdbcType=VARCHAR}
+		AND
+			A.EMAIL = #{email, jdbcType=VARCHAR}
+	</delete>
+
+	
+</mapper>

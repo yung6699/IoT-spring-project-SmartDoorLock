@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mapper.com.sl.web.doorlock">
+	<!-- 열쇠 정보 리스트로 출력하기 -->
+	<select id="doorlockSelectKeys" resultType="WebDoorlockVO"
+		parameterType="WebDoorlockVO">
+		SELECT
+			A.KEY_ID as key_id,
+			A.EMAIL as email,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_GRADE' AND B.USE_YN='예' AND B.CODE = A.GRADE) as grade_name,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_STATE' AND B.USE_YN='예' AND B.CODE = A.STATE) as state_name,
+			A.START_DATE as start_date,
+			A.EXPIRE_DATE as expire_date
+		FROM
+			KEY_MST A
+		WHERE
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+
+	</select>
+
+	<!-- 열쇠 정보 상세보기 -->
+	<select id="doorlockSelectKeysDetail_1" parameterType="WebDoorlockVO" resultType="WebDoorlockVO">
+		SELECT
+			A.EMAIL as email,
+			A.KEY_ID as key_id,
+			A.GRADE as grade,
+			A.STATE as state,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_GRADE' AND B.USE_YN='예' AND B.CODE = A.GRADE) as grade_name,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='KEY_STATE' AND B.USE_YN='예' AND B.CODE = A.STATE) as state_name,
+			A.UPDT_EMAIL as updt_email,
+			A.UPDT_DT as updt_dt,
+			A.START_DATE as start_date,
+			A.EXPIRE_DATE as expire_date,
+			A.SERIAL_NO as serial_no
+		FROM
+			KEY_MST A
+		WHERE
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 키 내용 상세보기 -->
+	<select id="doorlockSelectKeysDetail_2" parameterType="WebDoorlockVO" resultType="String">
+		SELECT
+			A.GRADE as grade 
+		FROM
+			KEY_MST A
+		WHERE
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER}
+		AND
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+				
+	</select>
+	
+	<select id="doorlockKeysCreateCheck" resultType="WebDoorlockVO"
+		parameterType="WebDoorlockVO">
+		SELECT
+			EMAIL as email,
+			NAME as name,
+			PHONE_NUM as phone_num
+		FROM
+			MEMBER_MST
+		WHERE
+			EMAIL = #{email,jdbcType=VARCHAR}
+	</select>
+	<!-- 열쇠 권한 부여 -->
+	
+	
+	<select id="doorlockKeysCreate_1" parameterType="WebDoorlockVO" resultType="Integer">
+		SELECT
+			count(*) as count
+		FROM
+			KEY_MST A
+		WHERE
+			A.EMAIL=#{email,jdbcType=VARCHAR}
+		AND
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}		
+	</select>
+	<!-- 내가 가지고 있는 도어락에 대한 권한이 적합한가 -->
+	<select id="doorlockKeysCreate_2" parameterType="WebDoorlockVO" resultType="WebDoorlockVO">
+		SELECT
+			A.GRADE as grade
+		FROM	
+			KEY_MST A
+		WHERE
+			A.MEMBER_ID=#{member_id,jdbcType=INTEGER}
+		AND
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+	</select>
+	<select id="doorlockKeysCreate_3" parameterType="WebDoorlockVO" resultType="Integer">
+		SELECT
+			count(*) as count
+		FROM	
+			DOORLOCK_MST M
+		WHERE
+			M.REGISTERED = 1
+		AND
+			M.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="doorlockKeysCreate_4" parameterType="WebDoorlockVO" resultType="String">
+		SELECT
+			A.DOORLOCK_NAME as doorlock_name
+		FROM	
+			DOORLOCK_DET A
+		WHERE
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}			
+	</select>
+	
+	<select id="doorlockKeysCreate_5" parameterType="WebDoorlockVO" resultType="Integer">
+		SELECT
+			A.MEMBER_ID as member_id
+		FROM	
+			MEMBER_MST A
+		WHERE
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="doorlockKeysCreate_6" parameterType="WebDoorlockVO" resultType="Integer">
+		SELECT
+			MAX(A.SORT)+1
+		FROM	
+			KEY_MST A
+		WHERE
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+	</select>
+	<insert id="doorlockKeysCreate_7" parameterType="WebDoorlockVO">
+		INSERT INTO
+			KEY_MST A(
+				A.KEY_ID,
+				A.MEMBER_ID,
+				A.EMAIL,
+				A.SERIAL_NO,
+				A.KEY_NAME,
+				A.GRADE,
+				A.START_DATE,
+				A.EXPIRE_DATE,
+				A.SORT,
+				A.STATE,
+				A.CRT_DT,
+				A.CRT_EMAIL,
+				A.UPDT_DT,
+				A.UPDT_EMAIL
+			)
+		VALUES(
+			#{key_id,jdbcType=VARCHAR},
+			#{member_id,jdbcType=INTEGER},
+			#{email,jdbcType=VARCHAR},
+			#{serial_no,jdbcType=VARCHAR},
+			#{key_name,jdbcType=VARCHAR},
+			#{grade,jdbcType=VARCHAR},
+			#{start_date,jdbcType=VARCHAR},
+			#{expire_date,jdbcType=VARCHAR},
+			#{sort,jdbcType=INTEGER},
+			'GRANTING',
+			SYSDATE,
+			#{send_email,jdbcType=VARCHAR},
+			SYSDATE,
+			#{send_email,jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- Key_VAL_TIME 이 새가 되어브렀으므로.. -->
+	<insert id="doorlockKeysCreate_8" parameterType="WebDoorlockVO">
+		INSERT INTO
+			KEY_VAL_TIME A(
+				A.KEY_ID,
+				A.KEY_VAL_ID,
+				A.MEMBER_ID,
+				A.START_TIME,
+				A.END_TIME,
+				A.DAYS,
+				A.CRT_DT,
+				A.CRT_EMAIL,
+				A.UPDT_DT,
+				A.UPDT_EMAIL
+			)
+		VALUES(
+			#{key_id,jdbcType=VARCHAR},
+			KEY_VAL_TIME_SEQ.NEXTVAL,
+			#{member_id,jdbcType=INTEGER},
+			0,
+			235959,
+			'일,월,화,수,목,금,토',
+			SYSDATE,
+			#{send_email,jdbcType=VARCHAR},
+			SYSDATE,
+			#{send_email,jdbcType=VARCHAR}
+		)
+	</insert>
+	<select id="doorlockKeysCreate_9" parameterType="WebDoorlockVO" resultType="WebDoorlockVO">
+		SELECT
+			A.KEY_ID as key_id,
+			A.MEMBER_ID as member_id,
+			A.EMAIL as email,
+			A.SERIAL_NO as serial_no,
+			A.KEY_NAME as key_name,
+			A.GRADE as grade,
+			A.START_DATE as start_date,
+			A.EXPIRE_DATE as expire_date,
+			A.SORT as sort,
+			A.STATE as state,
+			A.CRT_DT as crt_dt,
+			A.CRT_EMAIL as crt_email,
+			A.UPDT_DT as updt_dt,
+			A.UPDT_EMAIL as updt_email
+		FROM	
+			KEY_MST A
+		WHERE
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+		AND
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER}
+	</select>
+	
+	
+	<delete id="doorlockKeysDelete_1" parameterType="WebDoorlockVO">
+		DELETE	FROM
+			CAT_KEY A
+		WHERE
+			A.KEY_ID=#{key_id,jdbcType=VARCHAR}
+		AND
+			A.CRT_EMAIL=#{email,jdbcType=VARCHAR}
+	</delete>
+	<delete id="doorlockKeysDelete_2" parameterType="WebDoorlockVO">
+		DELETE	FROM
+			KEY_MST A
+		WHERE
+			A.KEY_ID=#{key_id,jdbcType=VARCHAR}
+		AND
+			A.EMAIL=#{email,jdbcType=VARCHAR}
+	</delete>
+	<delete id="doorlockKeysDelete_3" parameterType="WebDoorlockVO">
+		DELETE	FROM
+			CAT_KEY A
+		WHERE
+			A.KEY_ID=#{key_id,jdbcType=VARCHAR}
+	</delete>
+	
+	<update id="doorlockKeysUpdate" parameterType="WebDoorlockVO">
+		UPDATE 
+			KEY_MST A
+		SET
+			A.GRADE=#{grade,jdbcType=VARCHAR},
+			A.STATE=#{state,jdbcType=VARCHAR},
+			A.EXPIRE_DATE=#{expire_date,jdbcType=VARCHAR},
+			A.START_DATE=#{start_date,jdbcType=VARCHAR},
+			A.UPDT_EMAIL=#{updt_email,jdbcType=VARCHAR},			
+			A.UPDT_DT=SYSDATE
+			
+		WHERE
+			A.EMAIL=#{email,jdbcType=VARCHAR}
+		AND
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="getMyGrade" parameterType="WebDoorlockVO" resultType="String">
+		SELECT
+			A.GRADE as grade
+		FROM
+			KEY_MST A
+		WHERE
+			A.MEMBER_ID=#{member_id,jdbcType=INTEGER}
+		AND
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="selectLogList" resultType="WebDoorlockVO"
+		parameterType="WebDoorlockVO">
+		SELECT
+			SEND_EMAIL as send_email,
+			RECV_EMAIL as recv_email,
+			MESSAGE as message,
+			LOG_DATE as log_date,
+			SERIAL_NO as serial_no
+		FROM
+			LOG
+		WHERE
+			SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+		ORDER BY
+			LOG_NO DESC
+	</select>
+	<select id="getEmail" parameterType="WebDoorlockVO" resultType="String">
+		SELECT
+			A.EMAIL as email
+		FROM
+			KEY_MST A
+		WHERE
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+	</select>
+	<select id="getDoorlockKey" parameterType="String" resultType="WebDoorlockVO">
+		SELECT
+			A.START_DATE as start_date,
+			A.EXPIRE_DATE as expire_date,
+			A.GRADE as grade,
+			A.STATE as state
+		FROM
+			KEY_MST A
+		WHERE
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.system.log.setter">
+	<insert id="setSystemLog" parameterType="SystemLogSetterVO">
+		INSERT INTO
+			LOG_SYSTEM
+		VALUES(
+			#{serial_no,jdbcType=VARCHAR},
+			#{send_email,jdbcType=VARCHAR},
+			#{recv_email,jdbcType=VARCHAR},
+			#{state,jdbcType=VARCHAR},
+			#{message,jdbcType=VARCHAR},
+			SYSDATE,
+			LOG_SYSTEM_SEQ.NEXTVAL
+		)
+	</insert>
+	
+	<insert id="setDoorlockLog" parameterType="SystemLogSetterVO">
+		INSERT INTO
+			LOG_DOORLOCK
+		VALUES(
+			#{serial_no,jdbcType=VARCHAR},
+			#{send_email,jdbcType=VARCHAR},
+			#{recv_email,jdbcType=VARCHAR},
+			#{state,jdbcType=VARCHAR},
+			#{message,jdbcType=VARCHAR},
+			SYSDATE,
+			LOG_DOORLOCK_SEQ.NEXTVAL
+		)
+	</insert>
+	
+	<insert id="setNewspeed" parameterType="SystemLogSetterVO">
+		INSERT INTO
+			NEWSPEED
+		VALUES(
+			#{serial_no,jdbcType=VARCHAR},
+			#{send_email,jdbcType=VARCHAR},
+			#{recv_email,jdbcType=VARCHAR},
+			#{state,jdbcType=VARCHAR},
+			#{message,jdbcType=VARCHAR},
+			SYSDATE,
+			0,
+			NEWSPEED_SEQ.NEXTVAL
+		)
+	</insert>
+
+	<select id="getNewspeedDoorlockUser" parameterType="String" resultType="String">
+		SELECT 
+			A.email as email
+		FROM
+			KEY_MST A
+		WHERE
+			A.serial_no= #{serial_no,jdbcType=VARCHAR}
+		AND
+			(
+				A.STATE = 'ACTIVE'
+			OR
+				A.STATE = 'INACTIVE'
+			)
+		AND
+			(
+				A.GRADE = 'MASTER' 
+					OR 
+				A.GRADE = 'MANAGER' 
+			)
+	</select>
+	<select id="getNewspeedDoorlockALLUser" parameterType="String" resultType="String">
+		SELECT 
+			A.email as email
+		FROM
+			KEY_MST A
+		WHERE
+			(
+				A.STATE = 'ACTIVE'
+			OR
+				A.STATE = 'INACTIVE'
+			)
+		AND
+			A.serial_no= #{serial_no,jdbcType=VARCHAR}
+	</select>
+
+	
+	<select id="getMessage" resultType="String" parameterType="String">
+		SELECT
+			A.MESSAGE as message
+		FROM
+			LOG_STATE A
+		WHERE
+			1=1
+		AND
+			A.STATE = #{state,jdbcType=VARCHAR}
+	</select> 
+	
+	<select id="getGcmId" parameterType="String" resultType="String">
+		SELECT
+			A.REG_ID as result
+		FROM
+			GCM_NOTI A
+		WHERE
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+	</select>
+	
+	<update id="updateNewFlag" parameterType="String">
+		UPDATE
+			NEWSPEED
+		SET
+			READ_FLAG = 1
+		WHERE 
+			READ_FLAG = 0
+		AND
+			STATE = 'APP_DOORLOCK_KEY_CREATE_REQUEST' 
+				OR
+			STATE = 'WEB_DOORLOCK_KEY_CREATE_REQUEST' 
+		AND
+			RECV_EMAIL = #{email,jdbcType=VARCHAR}
+	</update>
+	
+	
+</mapper>

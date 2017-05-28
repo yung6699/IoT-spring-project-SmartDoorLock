@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.web.home">
+	<select id="checkMember" resultType="Integer" parameterType="AppAccessLoginVO">
+		SELECT
+			count(*)
+		FROM
+			MEMBER_MST A
+		WHERE
+			1=1
+		AND 
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.PASSWORD = #{password,jdbcType=VARCHAR}
+		AND
+			A.STATE != '0'
+	</select>
+	
+	<select id="getCheckEmail" resultType="Integer" parameterType="AppAccessJoinVO">
+		SELECT
+			count(*)
+		FROM
+			MEMBER_MST A
+		WHERE
+			1=1
+		AND 
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.STATE != '0'
+	</select>
+	<!-- 트랜 젝션 코드  시작  -->
+	<insert id="setCompleteJoin" parameterType="AppAccessJoinVO">
+		INSERT INTO 
+			MEMBER_MST 
+		VALUES(
+			MEMBER_ID_SEQ.NEXTVAL,
+			#{email,jdbcType=VARCHAR},
+			#{password,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{phone_num,jdbcType=VARCHAR},
+			'0',
+			SYSDATE,
+			#{email,jdbcType=VARCHAR},
+			SYSDATE,
+			#{email,jdbcType=VARCHAR}
+		)
+	</insert>
+	<select id="getCurrentMember_id" resultType="Integer">
+		SELECT 
+			LAST_NUMBER-1
+		FROM 
+			USER_SEQUENCES
+		WHERE
+			SEQUENCE_NAME = 'MEMBER_ID_SEQ'
+	</select>
+	<update id="updateFindMember" parameterType="AppAccessFindAccountVO">
+		UPDATE 
+			MEMBER_MST A
+		SET
+			A.PASSWORD = #{password,jdbcType=VARCHAR},
+			A.STATE = '2'	
+		WHERE
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.NAME = #{name, jdbcType=VARCHAR}
+		AND
+			A.PHONE_NUM = #{phone_num, jdbcType=VARCHAR}	 
+		AND
+			(A.STATE = '1' OR A.STATE = '2' OR A.STATE = '3' OR A.STATE = '4')
+			
+	</update>
+</mapper>

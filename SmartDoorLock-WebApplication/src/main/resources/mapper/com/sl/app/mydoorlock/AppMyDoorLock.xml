@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mapper.com.sl.app.mydoorlock">
+
+	<select id="selectMyDoorLockList" resultType="AppMyDoorLockVO" parameterType="AppMyDoorLockVO">
+		SELECT
+			A.SERIAL_NO as serial_no,
+			A.GRADE as grade,
+			(SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+			A.KEY_ID as key_id,
+			B.DOORLOCK_NAME as doorlock_name,
+			B.installed_place as installed_place,
+			(SELECT C.EMAIL from KEY_MST C WHERE C.SERIAL_NO=A.SERIAL_NO AND C.GRADE='MASTER') as master_email,
+			(SELECT D.NAME from MEMBER_MST D WHERE D.EMAIL = (SELECT C.EMAIL from KEY_MST C WHERE C.SERIAL_NO=B.SERIAL_NO AND C.GRADE='MASTER')) as master_name,
+			B.crt_dt as crt_dt,
+			B.crt_email as crt_email,
+			(select C.NAME from MEMBER_MST C WHERE C.EMAIL = B.crt_email) as member_name
+		FROM
+			KEY_MST A, DOORLOCK_DET B
+		WHERE 
+			A.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+		AND
+			A.serial_no = b.serial_no
+		AND
+		    (A.GRADE = 'MASTER' OR	A.GRADE = 'MANAGER')
+		AND
+			(A.STATE = 'ACTIVE' OR A.STATE = 'INACTICE')
+		ORDER BY
+			A.CRT_DT DESC
+	</select>
+	
+	<!-- 도어락에 등록된 키 리스트  -->
+	<select id="selectKeyList" resultType="AppMyDoorLockVO" parameterType="AppMyDoorLockVO">
+	SELECT
+         A.SERIAL_NO as serial_no,
+         A.MEMBER_NAME as member_name,
+         A.MEMBER_EMAIL as member_email,
+         A.GRADE as grade,
+         A.GRADE_NAME as grade_name,
+         A.KEY_ID as key_id,
+         A.STATE as state,
+         A.START_DATE as start_date,
+         A.EXPIRE_DATE as expire_date,
+         A.DOORLOCK_NAME as doorlock_name,
+         A.INSTALLED_PLACE as installed_place,
+         A.MASTER_EMAIL as master_email,
+         A.MASTER_NAME as master_name,
+         A.CRT_DT as crt_dt,
+         A.CRT_EMAIL as crt_email        
+    FROM 
+    (SELECT
+         A.SERIAL_NO,
+         C.NAME  as member_name,
+         C.email as member_email,
+         A.GRADE,
+         (SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+         A.KEY_ID,
+         A.STATE as state,
+         to_char(A.START_DATE,'YY/MM/DD') as start_date,
+         to_char(A.EXPIRE_DATE,'YY/MM/DD') as expire_date,
+         B.DOORLOCK_NAME,
+         B.installed_place,
+         (SELECT C.EMAIL from KEY_MST C WHERE C.SERIAL_NO=A.SERIAL_NO AND C.GRADE='MASTER') as master_email,
+         (SELECT D.NAME from MEMBER_MST D WHERE D.EMAIL = (SELECT C.EMAIL from KEY_MST C WHERE C.SERIAL_NO=B.SERIAL_NO AND C.GRADE='MASTER')) as master_name,
+         B.crt_dt,
+         B.crt_email
+      FROM
+         KEY_MST A, DOORLOCK_DET B, MEMBER_MST C
+      WHERE 
+      	 A.SERIAL_NO = #{serial_no, jdbcType=VARCHAR}
+      AND
+      	C.MEMBER_ID = A.MEMBER_ID
+      AND
+         A.serial_no = b.serial_no
+      AND
+         (A.STATE = 'ACTIVE' OR A.STATE = 'INACTICE')
+    )  A ORDER BY A.GRADE_NAME ASC
+	</select>
+	<update id="updateMydoorLockName" parameterType="AppMyDoorLockVO">
+		UPDATE 
+			DOORLOCK_DET A
+		SET 
+			A.DOORLOCK_NAME = #{doorlock_name,jdbcType=VARCHAR} 
+		WHERE 
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR} 
+		AND 
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER} 
+		AND 
+			A.STATE = 'REGISTERED' 
+	</update>
+	
+	
+	<!-- 도어락 위치 변경 -->
+	<update id="updateDoorLockPlace" parameterType="AppMyDoorLockVO">
+		UPDATE 
+			DOORLOCK_DET A
+		SET 
+			A.INSTALLED_PLACE = #{installed_place,jdbcType=VARCHAR} 
+		WHERE 
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR} 
+		AND 
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER} 
+		AND 
+			A.STATE = 'REGISTERED' 
+	</update>
+	
+
+
+	<!-- 도어락에 키 등록시 멤버를 찾는다.  -->
+	<select id="selectSearchMember" resultType="AppMyDoorLockVO" parameterType="AppMyDoorLockVO">
+	
+		SELECT 
+			A.NAME as MEMBER_NAME, 
+			A.EMAIL as MEMBER_EMAIL,
+			A.MEMBER_ID as MEMBER_ID
+		FROM
+			MEMBER_MST A
+		WHERE
+			A.EMAIL = #{member_email, jdbcType=VARCHAR}
+	</select>
+
+
+	<!-- 도어락에 등록이 되어 있는지 검색  -->
+	<select id="selectOneCheck" resultType="Integer" parameterType="AppMyDoorLockVO">
+		
+		SELECT 
+			count(*)
+		FROM 
+			KEY_MST 
+		where 
+			SERIAL_NO = #{serial_no, jdbcType=VARCHAR}
+		and
+			MEMBER_ID = #{member_id, jdbcType=INTEGER}
+			 
+	</select>
+
+	<!-- 	sort값을 구하기 위한 쿼리 입니다.	-->
+	<select id="selectOneInsert_0" resultType="Integer" parameterType="AppMyDoorLockVO">
+		SELECT
+			MAX(A.SORT)+1 
+		FROM
+			KEY_MST A
+		WHERE
+			1=1
+		AND 
+			A.MEMBER_ID = #{member_id, jdbcType=INTEGER}
+	</select>
+	<!-- 도어락에 키를 등록한다. -->
+	<insert id="selectOneInsert_1" parameterType="AppMyDoorLockVO">
+		INSERT 
+			INTO KEY_MST
+		VALUES
+		    (
+				#{key_id, jdbcType=VARCHAR}, <!-- 이건 난수발생으로 서버에서 넣는다.  -->
+				#{member_id, jdbcType=INTEGER}, <!-- 멤버 검색으로 찾는다.  -->
+				#{serial_no, jdbcType=VARCHAR},
+				#{key_name, jdbcType=VARCHAR},<!-- 처음 설정시에는 도어락 이름이 들어간다.  -->
+				#{grade, jdbcType=VARCHAR},
+				#{start_date, jdbcType=VARCHAR},
+				#{expire_date, jdbcType=VARCHAR},
+				#{sort, jdbcType=INTEGER}, <!-- 이게 문제다 -->
+				#{state, jdbcType=VARCHAR}, <!-- 이건 IDLE로 서버에서 집어 넣는다. -->
+				SYSDATE,
+			 	#{crt_email,jdbcType=VARCHAR}, <!-- 세션에서 꺼낸다.  -->
+			 	SYSDATE,
+			 	#{updt_email,jdbcType=VARCHAR}, <!-- 세션에서 꺼낸다. -->
+			 	#{member_email,jdbcType=VARCHAR}
+			) 	
+
+	</insert>
+	<!-- 모든열쇠에는 기본적인 사용 가능 기간이 들어가야하고 처음부터 끝까지 사용할 수 있도록 default의 값을 삽입해 준다. -->
+	<insert id="selectOneInsert_2" parameterType="AppMyDoorLockVO">
+		INSERT INTO
+			KEY_VAL_TIME
+		VALUES(
+			#{key_id,jdbcType=VARCHAR},
+			KEY_VAL_TIME_SEQ.NEXTVAL,
+			#{member_id,jdbcType=INTEGER},
+			000000,
+			235959,
+			'일,월,화,수,목,금,토',
+			SYSDATE,
+			#{crt_email,jdbcType=VARCHAR},
+			SYSDATE,
+			#{crt_email,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	
+	
+	<!-- GCM을 보내기 위해 RegID를 찾는다.  -->
+	<select id="getRegId" parameterType="AppMyDoorLockVO" resultType="String">
+		SELECT
+			REG_ID
+		FROM
+			GCM_NOTI
+		WHERE
+			EMAIL = #{member_email,jdbcType=VARCHAR}
+		AND
+			AUTO_FLAG = 1
+	</select>
+	
+	
+	
+	<!-- 마스터나 매니저가 키 삭제시 사용한다.  -->
+	<delete id="deleteKey_1" parameterType="AppMyDoorLockVO">
+		DELETE FROM 
+			KEY_VAL_TIME A
+		WHERE 
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR} 
+	</delete>
+	
+	<!-- 마스터나 매니저가 키 삭제시 사용한다.  -->
+	<delete id="deleteKey_2" parameterType="AppMyDoorLockVO">
+		DELETE FROM 
+			KEY_MST A
+		WHERE 
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR} 
+	</delete>
+	
+	<delete id="deleteKey_3" parameterType="AppMyDoorLockVO">
+		DELETE FROM 
+			CAT_KEY A
+		WHERE 
+			A.KEY_ID = #{key_id, jdbcType=VARCHAR} 
+	</delete>
+	<delete id="deleteKey_4" parameterType="AppMyDoorLockVO">
+		DELETE FROM 
+			NEWSPEED A
+		WHERE 
+			A.SEND_EMAIL = #{email,jdbcType=VARCHAR} 
+		AND
+			A.RECV_EMAIL = #{member_email,jdbcType=VARCHAR}
+		AND
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+		AND
+			A.STATE='APP_DOORLOCK_KEY_CREATE_REQUEST' OR A.STATE='WEB_DOORLOCK_KEY_CREATE_REQUEST'
+	</delete>
+	
+	<!-- 보낸사람 이름 찾을때 사용  아직 쓰는 곳은 없는 듯 -->
+	<select id="findName" parameterType="AppMyDoorLockVO" resultType="SystemLogSetterVO">
+		SELECT
+			NAME
+		FROM
+			MEMBER_MST
+		WHERE
+			EMAIL = #{send_email,jdbcType=VARCHAR}
+	</select>
+
+	
+	<!-- 키 거부 된거 삭제할때 -->
+	<delete id="deleteDenyKey" parameterType="AppMyDoorLockVO">
+		DELETE
+			FROM KEY_MST A
+		WHERE
+			A.STATE = 'GRANTING'
+		AND
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.UPDT_EMAIL = #{updt_email,jdbcType=VARCHAR}
+		AND
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+	</delete>
+	
+	
+
+	
+	<!-- 도어락에 총 키가 몇개 등록되어 있는지 검사 -->
+	<select id="selectCount" resultType="Integer" parameterType="AppMyDoorLockVO">
+		SELECT 
+			count(*)
+		FROM 
+			KEY_MST 
+		where 
+			SERIAL_NO = #{serial_no, jdbcType=VARCHAR}	 
+	</select>
+	
+	
+	<!-- 도어락을 삭제합니다. -->
+	<select id="deleteDoorlock1" parameterType="AppMyDoorLockVO" resultType="Integer">
+		SELECT
+			count(*) as count
+		FROM
+			KEY_MST A
+		WHERE
+			A.SERIAL_NO=#{serial_no, jdbcType=VARCHAR}
+		AND
+			A.GRADE!='MASTER'
+	</select>
+
+	<delete id="deleteDoorlock2" parameterType="AppMyDoorLockVO">
+		DELETE FROM
+			KEY_MST A
+		WHERE
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+		AND
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.GRADE = 'MASTER'
+	</delete>
+	<delete id="deleteDoorlock3" parameterType="AppMyDoorLockVO">
+		DELETE FROM
+			DOORLOCK_DET A
+		WHERE
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR}
+		AND
+			A.MEMBER_ID = #{member_id,jdbcType=VARCHAR}
+	</delete>
+	<delete id="deleteDoorlock4" parameterType="AppMyDoorLockVO">
+		DELETE FROM
+			CAT_KEY A
+		WHERE
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- 도어락을 미등록 상태로 변경한다.  -->
+	<update id="updateDoorLockState" parameterType="AppMyDoorLockVO">
+		UPDATE 
+			DOORLOCK_MST A
+		SET 
+			A.REGISTERED = 0 
+		WHERE 
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR} 
+	</update>
+	
+	<select id="getEmail" parameterType="int" resultType="String">
+		SELECT
+			A.EMAIL as member_email
+		FROM
+			MEMBER_MST A
+		WHERE
+			A.MEMBER_ID=#{member_id,jdbcType=INTEGER}	
+	</select>
+	
+	<select id="getKey" parameterType="AppMyDoorLockVO" resultType="AppMyDoorLockVO">
+		SELECT
+			A.DOORLOCK_NAME as doorlock_name,
+			A.INSTALLED_PLACE as installed_place
+		FROM
+			DOORLOCK_DET A
+		WHERE
+			A.SERIAL_NO=#{serial_no,jdbcType=VARCHAR}
+	</select>
+</mapper>

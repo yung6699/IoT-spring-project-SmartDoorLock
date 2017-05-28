@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <configuration scan="true" scanPeriod="1 seconds"> -->
+<configuration>
+	<!-- 개발 -->
+<!-- 	<property name="PATH_LOGS" value="C:/Users/dydwl/Desktop/logs"/> -->
+	<!-- 서버 -->
+	<property name="PATH_LOGS" value="/usr/local/develop/tomcat7/logs/smartlock-webapp"/>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger{1000} @@ %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${PATH_LOGS}/smartlock-webapp.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger{1000} @@ %msg%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+ 			<fileNamePattern>${PATH_LOGS}/smartlock-webapp.%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+ 			<maxHistory>180</maxHistory>
+		</rollingPolicy>
+	</appender>
+	
+<!-- 	파일이 하루에 한개씩 생성된다  -->
+<!-- 	maxHIstory 설정은 위 부분에 롤링 정책에 따라 적용되 된다고 보면된다. 위 설정데로 라면 30일이 지난 파일은  삭제가 된다. -->
+<!-- 	http://syaku.tistory.com/316 중요한 블로거 
+	http://totoro3040.blogspot.kr/2015/05/logbackxml.html
+
+-->
+	
+	
+	<logger name="com.sl" level="DEBUG" />
+	<logger name="mapper.com.sl" level="DEBUG" />
+	<logger name="mapper" level="DEBUG" />
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor" level="DEBUG" />
+	<logger name="org.springframework" level="INFO" />
+	
+	<logger name="org.apache.commons.beanutils" level="INFO" />
+	<logger name="org.apache.commons" level="DEBUG" />
+	<logger name="org.apache.catalina" level="DEBUG" />
+	<logger name="org.apache.ibatis" level="TRACE" />
+	<logger name="org.apache.ibatis.session.Configuration" level="DEBUG">
+	<logger name="org.mybatis.spring" level="TRACE" />
+	<logger name="java.sql.Connection" level="TRACE" />
+	<logger name="java.sql.PreparedStatement" level="TRACE" />
+	<logger name="java.sql" level="TRACE" />
+	<logger name="java.sql.ResultSet" level="TRACE" />
+<!-- 	<logger name="jdbc.sqlonly" level="debug" /> -->
+<!-- 	<logger name="jdbc.sqltiming" level="debug" /> -->
+<!-- 	<logger name="jdbc.audit" level="error" /> -->
+	<logger name="jdbc.resultset" level="error" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+	
+<!-- 	<if condition='property("RUN_MODE").equals("SERVICE")'> -->
+<!-- 	</if>-->
+
+</configuration>

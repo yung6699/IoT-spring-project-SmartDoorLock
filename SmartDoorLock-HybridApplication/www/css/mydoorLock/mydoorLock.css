@@ -1,0 +1,24 @@
+body{margin:0px;}
+a{text-decoration:none;color:#333;}
+p.ui-li-aside{width:40px; margin-top:8px;}
+
+/*  도어락 리스트 CSS */
+#mydoorLockList_content{
+	overflow-y: hidden;
+	padding-bottom:2em;
+	padding-top: 0.8em;
+}
+
+.doorLock_name{margin-top: -5px;}
+.serial_no{margin-top: -7px;}
+#mydoorLockList li{
+	border-bottom:solid 1px #ddd;
+}
+
+#mydoorLockList li:hover{
+	background-color:#008CBA;
+	border-bottom:solid 1px #008CBA;
+}
+
+#master{content:url(../../img/mydoorLock/master_black.svg);}
+#manager{content:url(../../img/mydoorLock/manager_black.svg);}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.web.tag.select">
+	<select id="tagSelect" resultType="WebTagSelectVO" parameterType="WebTagSelectVO">
+		SELECT
+			CODE as id,
+			CODE_NAME as text
+		FROM
+			CODE_DET
+		WHERE
+			1=1
+		AND 
+			G_CODE=#{g_code,jdbcType=VARCHAR}
+		ORDER BY SORT ASC
+	</select>
+</mapper>

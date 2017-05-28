@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mapper.com.sl.web.graph">
+	<select id="selectServiceUsageCountPerDay" resultType="JSONObject" parameterType="JSONObject">
+		SELECT
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd') AS LOG_DATE,
+			COUNT(*) as COUNT
+		FROM 
+			LOG_SYSTEM A
+		GROUP BY 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+		ORDER BY 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+	</select>
+	<select id="selectWebUsageCountPerDay" resultType="JSONObject" parameterType="JSONObject">
+		SELECT
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd') AS LOG_DATE,
+			COUNT(*) as COUNT
+		FROM 
+			LOG_SYSTEM A
+		WHERE
+			A.STATE like 'W%'
+		GROUP BY 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+		ORDER BY 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+	</select>
+	<select id="selectAppUsageCountPerDay" resultType="JSONObject" parameterType="JSONObject">
+		SELECT
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd') AS LOG_DATE,
+			COUNT(*) as COUNT
+		FROM 
+			LOG_SYSTEM A
+		WHERE
+			A.STATE like 'A%'
+		GROUP BY 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+		ORDER BY 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+	</select>
+	
+	
+	<select id="selectServiceUsageKeyGrade" resultType="JSONObject" parameterType="JSONObject">
+		SELECT
+		  A.GRADE AS GRADE,
+		  count(*) as COUNT
+		FROM
+		  KEY_MST A
+		WHERE
+			A.STATE='ACTIVE' OR A.STATE='INACTIVE'
+		GROUP BY
+		  A.GRADE
+	</select>
+	<select id="selectServiceUsageKeyCount" resultType="JSONObject" parameterType="JSONObject">
+		SELECT
+		  COUNT(*) as COUNT
+		FROM
+		  KEY_MST A
+		WHERE
+		   A.STATE='ACTIVE' OR A.STATE='INACTIVE'
+		 	AND
+		   A.GRADE != 'MEMBER'
+	</select>
+	<select id="selectServiceUsageDoorlock" resultType="JSONObject" parameterType="JSONObject">
+		SELECT
+		  COUNT(*) as COUNT
+		FROM
+		  DOORLOCK_DET A
+	</select>
+	<select id="selectServiceUsageMember" resultType="JSONObject" parameterType="JSONObject">
+		SELECT
+		  COUNT(*) as COUNT
+		FROM
+		  MEMBER_MST A
+		WHERE
+		  A.STATE !=0
+	</select>
+	<select id="selectListDoorlock" resultType="JSONObject" parameterType="WebGraphVO">
+		SELECT
+			A.SERIAL_NO as SERIAL_NO
+		FROM
+		  KEY_MST A
+		WHERE
+		  (A.STATE = 'ACTIVE' OR A.STATE = 'INACTIVE')
+		  	AND
+		  A.EMAIL = #{email,jdbcType=VARCHAR}
+	</select>
+
+
+</mapper>

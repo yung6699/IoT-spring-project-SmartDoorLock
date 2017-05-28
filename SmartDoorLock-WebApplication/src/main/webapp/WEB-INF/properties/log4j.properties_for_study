@@ -1,0 +1,65 @@
+log4j.rootLogger=DEBUG, SMARTLOCK_LOG, SMARTLOCK_ERROR, COUT
+log4j.appender.NULL=org.apache.log4j.varia.NullAppender
+
+#================================================================================
+# SMARTLOCK log
+#================================================================================
+log4j.logger.adapter=TRACE, COUT, SMARTLOCK_LOG, SMARTLOCK_ERROR
+log4j.logger.org.springframework=DEBUG
+log4j.logger.org.apache.commons=DEBUG
+log4j.logger.org.apache.catalina=DEBUG
+
+log4j.logger.com.sl=DEBUG
+log4j.logger.filter=DEBUG
+log4j.logger.com.sl=DEBUG
+
+log4j.appender.COUT=org.apache.log4j.ConsoleAppender
+log4j.appender.COUT.Threshold=DEBUG
+log4j.appender.COUT.layout=org.apache.log4j.PatternLayout
+log4j.appender.COUT.layout.ConversionPattern=%-5p %d{MM-dd HH:mm:ss:SSS}[%-10.10t]%-30.30C{1} %-20.20M %4.4L %m%n
+
+log4j.appender.SMARTLOCK_LOG=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.SMARTLOCK_LOG.Threshold=DEBUG
+log4j.appender.SMARTLOCK_LOG.File=C:/Workspace/SpringWorkspace/SmartLockWorkspace/Servers/logs/DNF_SMARTLOCK_error.log
+log4j.appender.SMARTLOCK_LOG.DatePattern='.'yyyy-MM-dd
+log4j.appender.SMARTLOCK_LOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.SMARTLOCK_LOG.layout.ConversionPattern=%-5p %d{MM-dd HH:mm:ss:SSS}[%-10.10t]%-30.30C{1} %-20.20M %4.4L %m%n
+log4j.appender.SMARTLOCK_LOG.ImmediateFlush=True
+
+#================================================================================
+# log Level Setting
+#================================================================================
+log4j.appender.ADAPTER_LOG=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.ADAPTER_LOG.Threshold=TRACE
+log4j.appender.ADAPTER_LOG.File=C:/Workspace/SpringWorkspace/SmartLockWorkspace/Servers/logs/DWA_SMARTLOCK_adapter.log
+log4j.appender.ADAPTER_LOG.DatePattern='.'yyyy-MM-dd
+log4j.appender.ADAPTER_LOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.ADAPTER_LOG.layout.ConversionPattern=%-5p %d{MM-dd HH:mm:ss}[%20t]%-24.24C{2} %-15.15M %m%n
+log4j.appender.ADAPTER_LOG.ImmediateFlush=True
+
+log4j.appender.SMARTLOCK_ERROR=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.SMARTLOCK_ERROR.Threshold=DEBUG
+log4j.appender.SMARTLOCK_ERROR.File=C:/Workspace/SpringWorkspace/SmartLockWorkspace/Servers/logs/DNF_SMARTLOCK_error.log
+log4j.appender.SMARTLOCK_ERROR.DatePattern='.'yyyy-MM-dd
+log4j.appender.SMARTLOCK_ERROR.layout=org.apache.log4j.PatternLayout
+log4j.appender.SMARTLOCK_ERROR.layout.ConversionPattern=%-5p %d{MM-dd HH:mm:ss:SSS}[%-10.10t]%-30.30C{1} %-20.20M %4.4L %m%n
+log4j.appender.SMARTLOCK_ERROR.ImmediateFlush=True
+
+#================================================================================
+# MyBatis
+#================================================================================
+# display SQL-ID
+log4j.logger.org.apache.ibatis.session.Configuration=DEBUG, MYBATIS_LOG
+# display query
+log4j.logger.java.sql.Connection=DEBUG
+log4j.logger.java.sql.PreparedStatement=DEBUG
+log4j.logger.java.sql.ResultSet=DEBUG
+
+log4j.appender.MYBATIS_LOG=org.apache.log4j.DailyRollingFileAppender
+# display Open/Close
+log4j.appender.MYBATIS_LOG.Threshold=DEBUG
+log4j.appender.MYBATIS_LOG.File=C:/Workspace/SpringWorkspace/SmartLockWorkspace/Servers/logs/DNF_SMARTLOCK_mybatis.log
+log4j.appender.MYBATIS_LOG.DatePattern='.'yyyy-MM-dd
+log4j.appender.MYBATIS_LOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.MYBATIS_LOG.layout.ConversionPattern=%-5p %d{MM-dd HH:mm:ss:SSS}[%-10.10t]%-30.30C{1} %-20.20M %4.4L %m%n
+log4j.appender.MYBATIS_LOG.ImmediateFlush=True

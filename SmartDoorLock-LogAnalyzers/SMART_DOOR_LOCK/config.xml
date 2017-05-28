@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	
+
+	
+	<context:component-scan base-package="com.sl.sub.expirer" />
+	
+	
+	<bean id="logSetter" class="com.sl.sub.expirer.log.SystemLogSetterImpl"/>
+	
+	<bean id="expirerSchedulerService" class="com.sl.sub.expirer.scheduler.ExpirerSchedulerService">
+		<property name="scheduler" ref="expirerScheduler"/>
+	</bean>
+	
+	<!-- default 생성자가 먹힘. 이렇게 한다면. -->
+	<bean id="expirerScheduler" class="com.sl.sub.expirer.scheduler.ExpirerScheduler"/>
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations" ref="propertyLocations" />
+	</bean>
+
+	<!-- PropertyPlaceholderConfigurer에 사용될 properties 파일을 등록 -->
+	<util:list id="propertyLocations" list-class="java.util.LinkedList">
+		<value>file:///${PATH_CONFIG}/properties/jdbc.properties</value>
+		<value>file:///${PATH_CONFIG}/properties/anything.properties</value>
+		<value>file:///${PATH_CONFIG}/properties/context.properties</value>
+	</util:list>
+	
+	<util:properties id="jdbc" location="file:///${PATH_CONFIG}/properties/jdbc.properties" />
+	<util:properties id="anything" location="file:///${PATH_CONFIG}/properties/anything.properties" />
+	<util:properties id="context" location="file:///${PATH_CONFIG}/properties/context.properties" />
+	
+	<import resource="file:////${PATH_CONFIG}/context/jdbc-service.xml"/>
+	<import resource="file:////${PATH_CONFIG}/context/jdbc-graph.xml"/>
+	
+	
+	
+</beans>

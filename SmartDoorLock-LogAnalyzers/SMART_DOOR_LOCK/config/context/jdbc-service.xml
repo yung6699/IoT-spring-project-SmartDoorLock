@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+
+	<bean id="serviceDatabase" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="${service.driverClass}" />
+		<property name="url" value="${service.url}" />
+		<property name="username" value="${service.username}" />
+		<property name="password" value="${service.password}" />
+	</bean>
+	<!-- transaction manager -->
+	<context:annotation-config />
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="serviceDatabase"></property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="serviceDatabase" />
+		<property name="configLocation" value="file:///${PATH_SQL}/OracleMyBatis.xml" />
+		<property name="mapperLocations" value="file:///${PATH_SQL}/mapper/**/*.xml"></property>
+	</bean>
+	<!-- mapperLocations를 지정해주기 때문에, mybatis-config에 <mapper></mapper>로 경로를 별도 지정하지 않아도 된다. 지정시 이중처리로 에러 -->
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+</beans>

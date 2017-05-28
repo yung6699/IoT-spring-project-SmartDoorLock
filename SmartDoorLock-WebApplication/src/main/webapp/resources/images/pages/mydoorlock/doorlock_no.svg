@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg x="0px" y="0px" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <pattern id="pattern-1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse" viewBox="0 0 100 100">
+      <path d="M 0 0 L 50 0 L 50 100 L 0 100 Z" style="fill: black;"/>
+    </pattern>
+  </defs>
+  <ellipse style="fill: rgb(253, 255, 253); fill-rule: nonzero; stroke: rgb(121, 121, 121); stroke-width: 3;" cx="75" cy="75" rx="70" ry="70" bx:origin="0.375 0.375"/>
+  <text x="0" y="115" style="fill: rgb(0, 0, 0); font-size: 5px; font-weight: bold; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial-Unicode, Arial, sans-serif;"/>
+  <ellipse style="fill: rgb(253, 255, 253); fill-rule: nonzero; stroke: rgb(173, 173, 171); stroke-width: 2; mix-blend-mode: normal;" cx="75.087" cy="74.948" rx="65.137" ry="65.137" bx:origin="0.375 0.375"/>
+  <path d="M 89.345 64.984 L 89.345 56.393 C 89.345 47.932 82.46 41.048 74 41.048 C 65.54 41.048 58.655 47.932 58.655 56.393 L 58.655 64.984 L 54.313 65.368 L 54.313 97.215 L 74 98.952 L 93.687 97.215 L 93.687 65.368 L 89.345 64.984 Z M 76.316 85.924 L 74 85.924 L 71.684 85.924 L 73.01 81.062 C 72.228 80.69 71.684 79.899 71.684 78.975 C 71.684 77.695 72.721 76.659 74 76.659 C 75.28 76.659 76.316 77.695 76.316 78.975 C 76.316 79.899 75.772 80.69 74.991 81.061 L 76.316 85.924 Z M 84.712 64.576 L 74 63.631 L 63.288 64.576 L 63.288 56.393 C 63.288 50.486 68.093 45.68 74 45.68 C 79.907 45.68 84.712 50.486 84.712 56.393 L 84.712 64.576 Z" style="fill: rgb(150, 149, 149);" bx:origin="0 0"/>
+</svg>

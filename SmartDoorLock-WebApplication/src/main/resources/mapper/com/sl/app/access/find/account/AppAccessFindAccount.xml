@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.app.access.find.account">
+	<update id="updateFindMember" parameterType="AppAccessFindAccountVO">
+		UPDATE 
+			MEMBER_MST A
+		SET
+			A.PASSWORD = #{password,jdbcType=VARCHAR},
+			A.STATE = '2'	
+		WHERE
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.NAME = #{name, jdbcType=VARCHAR}
+		AND
+			A.PHONE_NUM = #{phone_num, jdbcType=VARCHAR}	 
+		AND
+			(A.STATE = '1' OR A.STATE = '2' OR A.STATE = '3' OR A.STATE = '4')
+			
+	</update>
+	
+</mapper>

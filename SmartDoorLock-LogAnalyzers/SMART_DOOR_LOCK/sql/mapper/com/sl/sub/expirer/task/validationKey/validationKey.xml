@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <!DOCTYPE configuration  -->
+<!-- PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd"> -->
+
+
+<mapper namespace="mapper.com.sl.sub.expirer.task.validationKey">
+	<update id="setActive" parameterType="KeyVO">
+		<![CDATA[ 
+			UPDATE
+				KEY_MST B
+			SET
+				B.STATE='ACTIVE'
+			WHERE
+				B.STATE = 'INACTIVE'
+			AND
+				B.KEY_ID in
+			(
+				SELECT
+					A.KEY_ID as key_id
+				FROM
+					KEY_VAL_TIME A
+				WHERE
+					A.START_TIME <= #{currentTime,jdbcType=INTEGER}
+				AND
+					A.END_TIME > #{currentTime,jdbcType=INTEGER}
+				AND
+					A.DAYS like #{dayOfWeek,jdbcType=VARCHAR}
+			)
+		]]>
+	</update>
+	<update id="setInactive" parameterType="KeyVO">
+		<![CDATA[ 
+			UPDATE
+				KEY_MST B
+			SET
+				B.STATE='INACTIVE'
+			WHERE
+				B.STATE = 'ACTIVE'
+			AND
+				B.KEY_ID in
+			(
+				SELECT
+					A.KEY_ID as key_id
+				FROM
+					KEY_VAL_TIME A
+				WHERE
+					A.START_TIME > #{currentTime,jdbcType=INTEGER}
+				AND
+					A.END_TIME <= #{currentTime,jdbcType=INTEGER}
+				AND
+					A.DAYS like #{dayOfWeek,jdbcType=VARCHAR}
+			)
+		]]>
+	</update>
+<!-- http://boneman.tistory.com/entry/Mybatis-java-%EC%97%B0%EB%8F%99-%EA%B8%B0%EC%B4%88 -->
+	
+</mapper>

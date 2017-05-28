@@ -1,0 +1,4 @@
+@import url('http://fonts.googleapis.com/earlyaccess/notosanskr.css');
+@import url("https://fonts.googleapis.com/css?family=Acme");
+*{font-family: 'Noto Sans KR', sans-serif; color: #2A3F54;}
+.ui-page{background-color: #F0F0F0;}

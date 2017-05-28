@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="mapper.com.sl.sub.expirer.task.graph">
+
+
+	<!-- 모든 회원들을 불러옵니다. -->
+	<select id="initSetUsage" resultType="JSONObject">
+		<![CDATA[ 
+		SELECT
+		
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd') AS LOG_DATE,
+			COUNT(*) AS COUNT,
+			A.SEND_EMAIL AS EMAIL
+		FROM 
+			LOG_SYSTEM A
+		WHERE 
+			1=1
+		GROUP BY 
+			A.SEND_EMAIL,
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+		ORDER BY
+			A.SEND_EMAIL, 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd') ASC
+		]]>
+	</select>
+	
+	<select id="initSetDoorlockUsage" resultType="JSONObject">
+		SELECT
+      		A.SERIAL_NO,
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd') LOG_DATE,
+			COUNT(*) COUNT
+		FROM 
+			LOG_DOORLOCK A
+		GROUP BY 
+			A.SERIAL_NO,
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd')
+		ORDER BY
+			A.SERIAL_NO, 
+			TO_CHAR(A.LOG_DATE,'yyyy-MM-dd') ASC
+	</select>
+	
+	<select id="initSetAccomodationSale" resultType="JSONObject">
+		SELECT
+			A.SERIAL_NO AS SERIAL_NO,
+			COUNT(*) AS COUNT 
+		FROM 
+			LOG_DOORLOCK A,
+			(
+				SELECT 
+					C.SERIAL_NO 
+				FROM 
+					CAT_LIST A,
+					CAT_KEY B,
+					KEY_MST C
+				WHERE 
+					A.TYPE = 'ACCOMMODATION'
+						AND
+					A.CAT_ID = B.CAT_ID
+						AND
+					B.KEY_ID = C.KEY_ID
+						GROUP BY
+					C.SERIAL_NO
+			) B
+		WHERE
+			A.SERIAL_NO = B.SERIAL_NO
+				AND
+			A.STATE LIKE '%_NEWSPEED_KEY_RESPONSE_ACCEPT'
+				AND
+			A.MESSAGE LIKE '%[MEMBER]%'
+				AND
+			A.LOG_DATE like TO_DATE(#{dateString,jdbcType=VARCHAR},'yyyy-MM-dd')
+		GROUP BY 
+			A.SERIAL_NO
+  	</select>
+</mapper>
+
+

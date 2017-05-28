@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mapper.com.sl.web.mykey">
+	
+	<select id="mykeyList" resultType="WebMyKeyVO" parameterType="WebMyKeyVO">
+		SELECT
+			A.KEY_NAME as key_name,
+			A.GRADE as grade, <!-- 열쇠 등급  -->
+			(SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+			(SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_STATE' AND C.USE_YN='예' AND C.CODE = A.STATE) as state_name,
+			to_char(A.START_DATE,'YY/MM/DD') as start_date, <!-- 열쇠 시작 기간  -->
+			to_char(A.EXPIRE_DATE,'YY/MM/DD') as expire_date, <!-- 열쇠 만료 기간  -->
+			A.KEY_ID as key_id,
+			A.SERIAL_NO as serial_no,
+			A.SORT as sort	
+		FROM
+			KEY_MST A
+		WHERE 
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		ORDER BY
+			A.GRADE, 
+			A.SORT
+	</select>
+	
+	
+	<select id="mykeyListDetail" resultType="WebMyKeyVO" parameterType="WebMyKeyVO">
+		SELECT
+			A.KEY_ID as key_id,
+			A.MEMBER_ID as member_id,
+			A.KEY_NAME as key_name, <!--사용자 정의  -->
+			(SELECT B.NAME FROM MEMBER_MST B WHERE B.MEMBER_ID = A.MEMBER_ID) as member_name, <!-- 소유자 -->
+			A.EMAIL as email, <!-- 이메일 -->
+			A.GRADE as grade, <!-- 열쇠 등급  -->
+			(SELECT C.CODE_NAME FROM CODE_DET C WHERE C.G_CODE='KEY_GRADE' AND C.USE_YN='예' AND C.CODE = A.GRADE) as grade_name,
+			A.SERIAL_NO as serial_no, <!-- 열쇠가 등록되 도어락 시리얼 넘버  -->
+			to_char(A.START_DATE,'YY/MM/DD') as start_date, <!-- 열쇠 시작 기간  -->
+			to_char(A.EXPIRE_DATE,'YY/MM/DD') as expire_date, <!-- 열쇠 만료 기간  -->
+			to_char(A.CRT_DT,'YY/MM/DD') as crt_dt<!--부여날짜  -->	
+		FROM
+			KEY_MST A
+		WHERE 
+			A.KEY_ID = #{key_id,jdbcType=VARCHAR}
+		
+	</select>
+	
+	<update id="updateMyKeyName" parameterType="WebMyKeyVO">
+		UPDATE 
+			KEY_MST A
+		SET 
+			A.KEY_NAME = #{key_name,jdbcType=VARCHAR} 
+		WHERE 
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR} 
+		AND 
+			A.email = #{email,jdbcType=INTEGER} 
+		AND 
+			A.STATE = 'ACTIVE' 
+		AND 
+			A.START_DATE <![CDATA[ < ]]> SYSDATE 
+        AND 
+        	A.EXPIRE_DATE <![CDATA[ > ]]> SYSDATE	
+	</update>
+	
+	<!-- 키 삭제시 (본인키 삭제시 또는 마스터나 매니저가 사용자 키 삭제시에도 사용된다.)  -->
+	<delete id="deleteKey" parameterType="WebMyKeyVO">
+		
+		DELETE 
+			FROM KEY_MST A
+		WHERE 
+			A.SERIAL_NO = #{serial_no,jdbcType=VARCHAR} 
+		and
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		
+	</delete>
+
+</mapper>

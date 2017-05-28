@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="169 170 160 160" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <pattern id="pattern-1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse" viewBox="0 0 100 100">
+      <path d="M 0 0 L 50 0 L 50 100 L 0 100 Z" style="fill: black;"/>
+    </pattern>
+  </defs>
+  <ellipse style="fill: rgb(216, 216, 216); stroke: none; stroke-opacity: 1; fill-opacity: 0.7;" cx="250" cy="250" rx="75" ry="75" bx:origin="9.408220869033812e-9 0"/>
+  <ellipse style="fill: rgb(243, 235, 78); fill-rule: nonzero; fill-opacity: 1; stroke: none; stroke-opacity: 1;" cx="250" cy="250" rx="70" ry="70" bx:origin="0.375 0.375"/>
+  <text x="0" y="115" style="fill: rgb(0, 0, 0); font-size: 5px; font-weight: bold; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial-Unicode, Arial, sans-serif;" transform="matrix(1, 0, 0, 1, 175.000031, 175)"/>
+  <path d="M 295.508 236.968 C 295.208 236.068 294.408 235.468 293.508 235.468 L 262.308 235.468 L 252.608 205.868 C 252.308 204.968 251.508 204.368 250.608 204.368 C 249.708 204.368 248.808 204.968 248.608 205.868 L 239.008 235.468 L 207.708 235.468 C 206.808 235.468 205.908 236.068 205.708 236.968 C 205.408 237.868 205.708 238.868 206.508 239.368 L 231.708 257.668 L 222.108 287.268 C 221.808 288.168 222.108 289.168 222.908 289.668 C 223.708 290.168 224.708 290.168 225.408 289.668 L 250.608 271.468 L 275.808 289.768 C 276.208 290.068 276.608 290.168 277.108 290.168 C 277.508 290.168 278.008 290.068 278.408 289.768 C 279.208 289.268 279.508 288.268 279.208 287.368 L 269.608 257.768 L 294.808 239.468 C 295.508 238.868 295.808 237.868 295.508 236.968 Z" style="fill: rgb(255, 255, 255); stroke: none; fill-opacity: 1;" bx:origin="0.5 0.5"/>
+</svg>

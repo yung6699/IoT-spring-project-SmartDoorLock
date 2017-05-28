@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="mapper.com.sl.web.category">
+	<select id="categoryListJSON1" parameterType="JSONObject" resultType="WebCategoryListVO">	
+		SELECT
+			A.CAT_ID as cat_id,
+			A.MEMBER_ID as member_id,
+			A.CAT_NAME as cat_name,
+			A.TYPE as type,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='CATEGORY_TYPE' AND B.USE_YN='예' AND B.CODE = A.TYPE) as type_name,
+			A.STATE as state,
+			(SELECT B.CODE_NAME FROM CODE_DET B WHERE B.G_CODE='CATEGORY_STATE' AND B.USE_YN='예' AND B.CODE = A.STATE) as state_name,			
+			A.SORT as sort,
+			A.CRT_DT as crt_dt,
+			A.CRT_EMAIL as crt_email,
+			A.UPDT_DT as updt_dt,
+			A.UPDT_EMAIL as updt_email
+		FROM
+			CAT_LIST A
+		WHERE
+			1=1
+				AND
+			A.MEMBER_ID = #{MEMBER_ID,jdbcType=INTEGER}	
+	</select>
+	<select id="categoryListJSON2" parameterType="JSONObject" resultType="WebCategoryVO">
+		SELECT
+			A.CAT_ID as cat_id,
+			A.MEMBER_ID as member_id,
+			A.KEY_ID as key_id,
+			A.SORT as sort,
+			A.CRT_DT as crt_dt,
+			A.CRT_EMAIL as crt_email,
+			A.UPDT_DT as updt_dt,
+			A.UPDT_EMAIL as updt_email
+		FROM
+			CAT_KEY A
+		WHERE
+			1=1
+				AND
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER}
+				AND
+			A.CAT_ID = #{cat_id,jdbcType=INTEGER}
+	</select>
+	
+	
+	<select id="categoryCreateDo1" parameterType="WebCategoryListVO" resultType="Integer">
+		SELECT 
+			count(*) as count
+		FROM 
+			CAT_LIST A
+		WHERE 
+			A.CAT_NAME = #{cat_name,jdbcType=VARCHAR}
+				AND
+			A.MEMBER_ID = #{member_id,jdbcType=INTEGER}
+				AND
+			1=1
+	</select>
+	<insert id="categoryCreateDo2" parameterType="WebCategoryListVO">
+		INSERT INTO
+			CAT_LIST 
+		VALUES 
+			(
+				CAT_LIST_SEQ.NEXTVAL,
+				#{member_id, jdbcType=INTEGER},
+				#{cat_name, jdbcType=VARCHAR},
+				#{type, jdbcType=VARCHAR},
+				#{sort, jdbcType=INTEGER},
+				'NORMAL',
+				SYSDATE,
+				#{crt_email, jdbcType=VARCHAR},
+				SYSDATE,
+				#{crt_email, jdbcType=VARCHAR}
+			)
+	</insert>
+	
+	<select id="categoryCreateDo3" parameterType="WebCategoryListVO" resultType="WebCategoryListVO">
+		SELECT
+			A.CAT_ID as cat_id,
+			A.MEMBER_ID as member_id, 
+			A.CAT_NAME as cat_name, 
+			A.TYPE as type, 
+			A.SORT as sort, 
+			A.STATE as state, 
+			A.CRT_DT as crt_dt, 
+			A.CRT_EMAIL as crt_email, 
+			A.UPDT_DT as updt_dt, 
+			A.UPDT_EMAIL as updt_email
+		FROM
+			CAT_LIST A
+		WHERE
+			A.CAT_NAME = #{cat_name,jdbcType=VARCHAR}
+				AND
+			A.CRT_EMAIL = #{crt_email,jdbcType=VARCHAR}
+				AND
+			1=1
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

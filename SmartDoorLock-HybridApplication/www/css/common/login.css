@@ -1,0 +1,132 @@
+body {padding: 0px;margin: 0px;}
+*:focus {outline: none}
+.loginPage{background-color:#2A3F54;}
+#img_content{
+	text-align:center; 
+	padding-top: 2.25em;
+	padding-bottom: 2em; 
+	margin-bottom:2em;
+	margin-left: 5px;
+}
+
+#img_content > img{
+	width: 100px;
+	height: 100px;
+	margin-top: 3em;
+}
+
+#input_content{
+	margin-left: 5px;
+	margin-top: -20px;
+}
+
+input[type=email]{
+	width:95%;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom:0.5em;
+	padding-top:0.75em;
+	padding-bottom:0.75em;
+	padding-left:0.75em;
+	font-size:1em;
+	box-sizing : border-box;
+	background-color:#2A3F54;
+	color: white;
+	border: none;
+	border-bottom: 1px solid #4A5F74;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+ 	 -webkit-tap-highlight-color: transparent; /* 일부 안드로이드 호환을 위한 코드 */
+}
+
+input[type=email]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #bbb;
+}
+input[type=email]::-moz-placeholder { /* Firefox 19+ */
+  color: #bbb;
+}
+input[type=email]:-ms-input-placeholder { /* IE 10+ */
+  color:#bbb;
+}
+
+input:focus {
+  outline: none;
+}
+
+input[type=password]{
+	width:95%;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom:0.5em;
+	padding-top:0.75em;
+	padding-bottom:0.75em;
+	padding-left:0.75em;
+	font-size:1em;
+	box-sizing : border-box;
+	border: none;
+	background-color:#2A3F54;
+	color: white;
+	border-bottom:1px solid #4A5F74;
+	 -webkit-tap-highlight-color: rgba(0,0,0,0);
+ 	 -webkit-tap-highlight-color: transparent; /* 일부 안드로이드 호환을 위한 코드 */
+}
+
+
+
+input[type=password]::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color:#bbb;
+}
+input[type=password]::-moz-placeholder { /* Firefox 19+ */
+  color: #bbb;
+
+}
+input[type=password]:-ms-input-placeholder { /* IE 10+ */
+  color: #bbb;
+}
+
+
+
+#loginBtn, #joinBtn{
+	width:95%;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-top:0.75em;
+	padding-bottom:0.75em;
+	border: none;
+	color: white;
+	text-align: center;
+	box-sizing : border-box;
+	font-size:1em;
+	margin-top:0.5em;
+	background-color: #2A3F54;
+	border: 1px solid #4A5F74;
+}
+
+#joinBtn:hover{background-color:#A19F9F}
+#autologin{
+	position: relative;
+	width:1.25em;
+	height:1.25em;
+}
+
+label[for="autologin"] {
+	font-family: 'Noto Sans KR', sans-serif;
+	position: relative;
+	top: -3px;
+	margin-top:-1px;
+	color:white;
+}
+
+#btnBox{
+	text-align:center;
+	margin-bottom:1em;
+}
+
+#checkbox_content{
+	margin-left: 5px;
+}
+
+#findAccount{
+	font-size:16px;
+	padding-left:1em;
+	color:#ddd;
+}

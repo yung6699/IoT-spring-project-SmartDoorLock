@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.com.sl.app.access.login">
+	<select id="checkMember" resultType="Integer" parameterType="AppAccessLoginVO">
+		SELECT
+			count(*)
+		FROM
+			MEMBER_MST A
+		WHERE
+			1=1
+		AND 
+			A.EMAIL = #{email,jdbcType=VARCHAR}
+		AND
+			A.PASSWORD = #{password,jdbcType=VARCHAR}
+		AND
+			A.STATE != '0'
+	</select>
+	
+	<insert id="insertRegId" parameterType = "AppAccessLoginVO">
+		INSERT INTO
+			GCM_NOTI
+		VALUES(
+			#{email,jdbcType=VARCHAR},
+			#{autologin,jdbcType=INTEGER},
+			#{regId,jdbcType=VARCHAR}
+			)
+	</insert>
+	<update id="updateRegId" parameterType = "AppAccessLoginVO">
+		UPDATE 
+			GCM_NOTI
+		SET
+			REG_ID = #{regId,jdbcType = VARCHAR},
+			AUTO_FLAG = 1
+		WHERE
+			EMAIL = #{email,jdbcType = VARCHAR}
+	</update>
+	
+	
+	<select id="searchRegId" resultType="Integer" parameterType = "AppAccessLoginVO">
+		SELECT
+			COUNT(*)
+		FROM
+			GCM_NOTI
+		WHERE
+			EMAIL = #{email,jdbcType=VARCHAR}
+	</select> 
+</mapper>

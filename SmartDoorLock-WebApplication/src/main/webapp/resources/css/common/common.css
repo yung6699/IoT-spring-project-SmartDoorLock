@@ -1,0 +1,108 @@
+@CHARSET "UTF-8"
+
+
+/*
+내용을 입력할 경우에는 GODOB
+제목을 이용할 때에는 GODOM
+HY 견고딕  HY
+뭔가 특이한것을 넣고 싶을때는 BM
+*/
+@font-face{
+	font-family:'GODOB';
+	src:url('../../font/GODOB.TTF');
+}
+@font-face{
+	font-family:'GODOM';
+	src:url('../../font/GODOM.TTF');
+}
+@font-face{
+	font-family:'BM';
+	src:url('../../font/BMDOHYEON_TTF.TTF');
+}
+
+@media screen and (max-width: 768px) and (min-width: 000px) {
+    .navbar-brand {
+    	position:fixed;
+		display: block;
+		left:0%;
+		float: left;
+		vertical-align: super;
+	}
+}
+@media screen and (min-width: 769px) {
+	.navbar-brand {
+		position:fixed;
+		display: block;
+		left:45%;
+		float:left;
+		vertical-align: super;
+	}
+		
+}
+a{
+	text-decoration:none;
+}
+.a-black{
+	color:#000;
+}
+.a-black:hover{
+	color:#000;
+}
+.a-black:active{
+	color:#444;
+}
+.a-black:visited{
+	color:#000;
+}
+
+.a-white{
+	color:#fff;
+}
+.a-white:hover{
+	color:#ddd;
+}
+.a-white:active{
+	color:#aaa;
+}
+.a-white:visited{
+	color:#fff;
+}
+.list-attr{
+	float:left;
+	font-weight:bold;
+	font-family:'GODOM';
+}
+
+.list-value{
+	float:right;
+}
+h1{
+	font-family:'GODOM';
+}
+h2{
+	font-family:'GODOM';
+}
+h3{
+	font-family:'GODOM';
+}
+h4{
+	font-family:'GODOM';
+}
+h5{
+	font-family:'GODOM';
+}
+
+.navbar-fixed-side{
+	z-index:2
+}
+footer{
+    padding-top: 1.5em;
+    padding-bottom: 2em;
+    margin-top: 100px;
+    color: #99979c;
+    background-color: #2a2730;
+    display: block;
+	text-align:center;
+	position: absolute;
+	z-index:1;
+}
