@@ -3,7 +3,7 @@
  - [웹, 서비스](../SmartDoorLock-WebApplication) : 관리자 페이지 이며 앱보다 더 넓은 관리기능 제공
  - [앱](../SmartDoorLock-HybridApplication) : 실제 도어락을 여는 주체이며 웹보다 적은 관리기능을 제공한다.
  - [하드웨어](../SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락
- - [배치 프로세스](../SmartDoorLock-LogAnalyzers) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다.
+ - [배치 프로세스](../SmartDoorLock-BatchProcess) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다.
 
 # 배치 프로세스 소개
 
@@ -14,7 +14,7 @@
 
 # 동작
 
-![working of batch process](https://github.com/yung6699/SmartDoorLock-LogAnalyzers/raw/master/docs/batch_working.bmp)
+![working of batch process](https://github.com/yung6699/SmartDoorLock/blob/master/SmartDoorLock-BatchProcess/docs/batch_working.bmp)
 
 
 # 주요 코드
@@ -137,7 +137,7 @@
 
 # 그래프DB-ERD
 
-![graph DB ERD](https://github.com/yung6699/SmartDoorLock-LogAnalyzers/raw/master/docs/graphDB.png)
+![graph DB ERD](https://github.com/yung6699/SmartDoorLock/blob/master/SmartDoorLock-BatchProcess/docs/graphDB.png)
 
 # 기술 스택
  - jdk1.8
@@ -148,5 +148,5 @@
 
 # 산출 문서
  
- - [분석될 로그 상태값 정의서](https://github.com/yung6699/SmartDoorLock-LogAnalyzers/raw/master/docs/LOG_STATE%20Definition.xlsx) 
+ - [분석될 로그 상태값 정의서](https://github.com/yung6699/SmartDoorLock/blob/master/SmartDoorLock-BatchProcess/docs/LOG_STATE%20Definition.xlsx) 
 

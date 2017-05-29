@@ -3,7 +3,7 @@
  - [웹, 서비스](../SmartDoorLock-WebApplication) : 관리자 페이지 이며 앱보다 더 넓은 관리기능 제공
  - [앱](../SmartDoorLock-HybridApplication) : 실제 도어락을 여는 주체이며 웹보다 적은 관리기능을 제공한다.
  - [하드웨어](../SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락
- - [배치 프로세스](../SmartDoorLock-LogAnalyzers) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다.
+ - [배치 프로세스](../SmartDoorLock-BatchProcess) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다.
 
 # 웹 서비스 프로젝트 소개
 
@@ -15,7 +15,7 @@
 
 # 도어락에 대한 권한별 기능 이용 범위
 
-![권한별 이용 범위](https://github.com/yung6699/SmartDoorLock-WebApplication/raw/master/docs/authfunction.png)
+![권한별 이용 범위](https://github.com/yung6699/SmartDoorLock/blob/master/SmartDoorLock-WebApplication/docs/authfunction.png)
 
 # URL 구조
 
@@ -25,7 +25,7 @@
 
 # 서비스DB ERD
 
-![서비스 DB ERD](https://github.com/yung6699/SmartDoorLock-WebApplication/raw/master/docs/serviceDB.png)
+![서비스 DB ERD](https://github.com/yung6699/SmartDoorLock/blob/master/SmartDoorLock-WebApplication/docs/serviceDB.png)
 
 # 주요 코드
 
@@ -152,7 +152,7 @@
 
 # 산출문서
 
- - [UI 정의서](https://github.com/yung6699/SmartDoorLock-WebApplication/raw/master/docs/UI%20%EC%84%A4%EA%B3%84%EC%84%9C.pdf)
+ - [UI 정의서](https://github.com/yung6699/SmartDoorLock/blob/master/SmartDoorLock-WebApplication/docs/UI%20%EC%84%A4%EA%B3%84%EC%84%9C.pdf)
 
 # 기술 스택
 
