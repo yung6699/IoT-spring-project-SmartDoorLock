@@ -1,4 +1,4 @@
-# IoT SmartDoorLock System Project
+# IoT Project - 스마트 도어락 시스템
  - [웹, 서비스](./SmartDoorLock-WebApplication) : 관리자 페이지 이며 앱보다 더 넓은 관리기능 제공 (Spring Framework, JSP)
  - [앱](./SmartDoorLock-HybridApplication) : 실제 도어락을 여는 주체이며 웹보다 적은 관리기능을 제공한다. (Cordova, HTML5, CSS3, jQuery)
  - [하드웨어](./SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락 (Arduino, C)
@@ -8,16 +8,16 @@
 
  - 블루투스로 도어락의 문을 열고 닫으며, 인터넷으로 도어락의 열쇠들을 관리한다.
  - 사용자에게는 앱과 웹 서비스가 제공된다.
- - *앱*은 도어락을 제어하는 매개체이며, 관리의 기능이 일부 포함되어있다.
- - *웹*은 *앱*보다 더 넓은 의미의 관리 기능을 제공한다.
- - *도어락*은 스마트폰의 블루투스로 제어된다.
- - *배치프로세스*는 앱,웹,도어락 서비스 이용에 발생되면서 생긴 로그를 분석하는 프로세스이다. 
+ - 앱은 도어락을 제어하는 매개체이며, 관리의 기능이 일부 포함되어있다.
+ - 웹은 앱보다 더 넓은 의미의 관리 기능을 제공한다.
+ - 도어락은 스마트폰의 블루투스로 제어된다.
+ - 배치프로세스는 앱,웹,도어락 서비스 이용에 발생되면서 생긴 로그를 분석하는 프로세스이다. 
 
-## 시연 영상
+## 시연 동영상
 
 [![Youtube 영상](https://img.youtube.com/vi/J4H5Q9bNlK4/0.jpg)](https://www.youtube.com/embed/J4H5Q9bNlK4)
 
-## 시스템 구성
+## 시스템 구성도
 
 ![architecture of system](https://github.com/yung6699/SmartDoorLock/raw/master/docs/images/architecture.png)
 
@@ -25,7 +25,7 @@
 
 ![functions of system](https://github.com/yung6699/SmartDoorLock/raw/master/docs/images/functions.png)
 
-## 시스템 산출문서
+## 프로젝트 산출문서
  
  - [운영중인 웹페이지](http://smartlock.fun25.co.kr) 
   - 테스트 계정( dydwls121200@gmail.com / 1 )
