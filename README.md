@@ -27,8 +27,7 @@
 
 ## 프로젝트 산출문서
  
- - [운영중인 웹페이지](http://smartlock.fun25.co.kr) 
-  - 테스트 계정( dydwls121200@gmail.com / 1 )
+ - [운영중인 웹페이지](http://smartlock.fun25.co.kr) / 테스트 계정 ( 아이디 : dydwls121200@gmail.com , 비밀번호 : 1 )
  - [제안설계서.pdf](https://github.com/yung6699/SmartDoorLock/raw/master/docs/%EC%A0%9C%EC%95%88%EC%84%A4%EA%B3%84%EC%84%9C.pdf)
  - [설계서(간소화).pdf](https://github.com/yung6699/SmartDoorLock/raw/master/docs/%EC%84%A4%EA%B3%84%EC%84%9C_%EA%B0%84%EC%86%8C%ED%99%94.pdf) 
  - [완료보고서.pdf](https://github.com/yung6699/SmartDoorLock/raw/master/docs/%EC%99%84%EB%A3%8C%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf)
