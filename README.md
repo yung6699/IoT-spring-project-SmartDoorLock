@@ -1,4 +1,4 @@
-# IoT Project - 스마트 도어락 시스템
+# IoT 프로젝트 - 스마트 도어락 시스템
  - [웹, 서비스](./SmartDoorLock-WebApplication) : 관리자 페이지 이며 앱보다 더 넓은 관리기능 제공 (Spring Framework, JSP)
  - [앱](./SmartDoorLock-HybridApplication) : 실제 도어락을 여는 주체이며 웹보다 적은 관리기능을 제공한다. (Cordova, HTML5, CSS3, jQuery)
  - [하드웨어](./SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락 (Arduino, C)
