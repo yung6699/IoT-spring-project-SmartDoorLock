@@ -4,6 +4,8 @@
  - [하드웨어](./SmartDoorLock-Arduino) : 블루투스 모듈과 Wi-Fi모듈을 이용한 하드웨어 도어락 (Arduino, C)
  - [배치 프로세스](./SmartDoorLock-LogAnalyzers) : 서비스에 발생된 로그를 분석하여 서비스 이용자에게 그래프를 제공한다. (Java)
 
+<br/>
+
 ## 시스템 소개
 
  - 블루투스로 도어락의 문을 열고 닫으며, 인터넷으로 도어락의 열쇠들을 관리한다.
@@ -13,17 +15,37 @@
  - 도어락은 스마트폰의 블루투스로 제어된다.
  - 배치프로세스는 앱,웹,도어락 서비스 이용에 발생되면서 생긴 로그를 분석하는 프로세스이다. 
 
+<br/>
+
 ## 시연 동영상
 
+**이 서비스가 어떤 것인지 이해할 수 있도록 영상을 만들었습니다. <br/> 지나치지 마시고 꼭 봐주세요. 부탁드립니다.!!!**
+
 [![Youtube 영상](https://img.youtube.com/vi/J4H5Q9bNlK4/0.jpg)](https://www.youtube.com/embed/J4H5Q9bNlK4)
+
+<br/>
+
+## 구성 요소 UI
+
+![main](./img/main.png)
+![img01](./img/img01.png)
+![img03](./img/img03.png)
+![app](./img/app.png)
+![HW](./img/Hardware.png)
+
+<br/>
 
 ## 시스템 구성도
 
 ![architecture of system](https://github.com/yung6699/SmartDoorLock/raw/master/docs/images/architecture.png)
 
+<br/>
+
 ## 시스템 기능도
 
 ![functions of system](https://github.com/yung6699/SmartDoorLock/raw/master/docs/images/functions.png)
+
+<br/>
 
 ## 프로젝트 산출문서
  
@@ -33,11 +55,15 @@
  - Trello [프로젝트 현황](https://trello.com/b/JC3rUHSw/-)
  - Trello [이슈 관리](https://trello.com/b/yQseIG1l/smartlock)
 
+<br/>
+
 ## 참여자
  - [윤태영](https://github.com/yung6699)
  - [조용진](https://github.com/drake-jin)
  - [진영균](https://github.com/ywnwalone)
  - 황대건
+
+<br/>
 
 ## 한이음 공모전
 - [2016 한이음 공모전](./hanium2016)    
